@@ -23,10 +23,7 @@ if st.session_state.page == "home":
         unsafe_allow_html=True
     )
 
-    # Garis pemisah untuk estetika
-    st.markdown("---")
-
-    # Display an image (replace 'image_url' with the actual image URL or file path)
+     # Display an image (replace 'image_url' with the actual image URL or file path)
     st.markdown(
         """
         <div style='text-align: center; margin-top: 20px; margin-bottom: 20px;'>
@@ -35,6 +32,9 @@ if st.session_state.page == "home":
         """,
         unsafe_allow_html=True
     )
+    
+    # Garis pemisah untuk estetika
+    st.markdown("---")
 
     # List kontributor dengan styling menarik
     st.markdown(
