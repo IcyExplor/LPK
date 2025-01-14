@@ -62,7 +62,7 @@ if st.session_state.page == "home":
         """,
         unsafe_allow_html=True
     )
-    st.markdown("<p style='text-align: center; color: #5D6D7E;'>Ilustrasi Kesehatan</p>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; color: #5D6D7E;'>BMI Calculator</p>", unsafe_allow_html=True)
 
     # Subtitle dengan Markdown Styling
     st.markdown(
