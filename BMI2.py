@@ -77,9 +77,10 @@ if st.session_state.page == "home":
     st.markdown("---")
 
     # Tombol "Next" untuk berpindah ke tampilan berikutnya
-    st.button("Next ➡️", on_click=next_page)
-    
-# Tampilan Berikutnya
+    if st.button("Next ➡️", key="next_button"):
+        next_page()
+
+# Tampilan Berikutnya (BMI Calculator)
 elif st.session_state.page == "next_page":
     st.markdown(
         """
@@ -93,61 +94,48 @@ elif st.session_state.page == "next_page":
         unsafe_allow_html=True
     )
 
-# Garis pemisah
+    # Garis pemisah
     st.markdown("---")
-    while True:
-    try:
-        # Input tinggi badan
-        tinggi = float(input("\033[1;33mMasukkan tinggi badan Anda (cm): \033[0m"))
-        if tinggi <= 0:
-            print("\033[1;31mTinggi badan harus lebih dari 0 cm.\033[0m")
-            continue
-        
-        # Input berat badan
-        berat = float(input("\033[1;33mMasukkan berat badan Anda (kg): \033[0m"))
-        if berat <= 0:
-            print("\033[1;31mBerat badan harus lebih dari 0 kg.\033[0m")
-            continue
-        
-        # Input jenis kelamin
-        jenis_kelamin = input("\033[1;33mMasukkan jenis kelamin Anda (pria/wanita): \033[0m").lower()
-        if jenis_kelamin not in ['pria', 'wanita']:
-            print("\033[1;31mJenis kelamin tidak valid. Masukkan 'pria' atau 'wanita'.\033[0m")
-            continue
-        
-        # Hitung berat ideal, BMI, dan kategori
-        berat_ideal = hitung_berat_badan_ideal(tinggi, jenis_kelamin)
-        bmi = hitung_bmi(berat, tinggi)
-        kategori = kategori_bmi(bmi)
-        
-        # Tampilkan hasil
-        print("\n\033[1;32m=== HASIL PERHITUNGAN ===\033[0m")
-        print(f"\033[1;34mBerat Badan Ideal Anda: {berat_ideal:.2f} kg\033[0m")
-        print(f"\033[1;34mIndeks Massa Tubuh (BMI): {bmi:.2f}\033[0m")
-        print(f"\033[1;34mKategori Berat Badan: {kategori}\033[0m")
 
-        # Tampilkan grafik BMI
-        tampilkan_grafik_bmi()
+    # Input fields dengan validasi
+    col1, col2 = st.columns(2)
+    with col1:
+        tinggi = st.number_input("Masukkan tinggi badan Anda (cm):", min_value=0.0, format="%.2f", key="tinggi")
+    with col2:
+        berat = st.number_input("Masukkan berat badan Anda (kg):", min_value=0.0, format="%.2f", key="berat")
 
-        # Berikan saran berdasarkan kategori BMI
-        if kategori == "Kurus":
-            print("\033[1;33m💡 Tips: Anda berada dalam kategori Kurus. Perhatikan asupan nutrisi dan konsultasikan dengan ahli gizi.\033[0m")
-        elif kategori == "Normal":
-            print("\033[1;32m🎉 Selamat! Anda berada dalam kategori Normal. Pertahankan gaya hidup sehat!\033[0m")
-        elif kategori == "Gemuk":
-            print("\033[1;33m💡 Tips: Anda berada dalam kategori Gemuk. Mulailah pola hidup sehat dan olahraga teratur.\033[0m")
+    jenis_kelamin = st.radio("Masukkan jenis kelamin Anda:", ('Pria', 'Wanita'), key="jenis_kelamin")
+
+    # Tombol untuk menghitung BMI
+    if st.button("Hitung BMI 🧮", key="hitung_bmi_button"):
+        if tinggi <= 0 or berat <= 0:
+            st.error("Tinggi dan berat badan harus lebih dari 0.")
         else:
-            print("\033[1;31m⚠️ Perhatian: Anda berada dalam kategori Obesitas. Segera konsultasikan dengan dokter atau ahli gizi.\033[0m")
+            # Hitung berat ideal, BMI, dan kategori
+            berat_ideal = hitung_berat_badan_ideal(tinggi, jenis_kelamin)
+            bmi = hitung_bmi(berat, tinggi)
+            kategori = kategori_bmi(bmi)
 
-        # Tanya pengguna apakah ingin mengulang
-        ulangi = input("\033[1;35mApakah Anda ingin menghitung lagi? (ya/tidak): \033[0m").lower()
-        if ulangi != 'ya':
-            print("\033[1;36mTerima kasih telah menggunakan aplikasi ini! 😊\033[0m")
-            break
+            # Tampilkan hasil dengan styling menarik
+            st.markdown("### 🎯 Hasil Perhitungan")
+            st.markdown(f"**Berat Badan Ideal Anda:** `{berat_ideal:.2f} kg`")
+            st.markdown(f"**Indeks Massa Tubuh (BMI):** `{bmi:.2f}`")
+            st.markdown(f"**Kategori Berat Badan:** `{kategori}`")
 
-    except ValueError:
-        print("\033[1;31mInput tidak valid. Harap masukkan angka untuk tinggi dan berat badan.\033[0m")
-        
-    # Tombol "Kembali" untuk kembali ke tampilan awal
-    if st.button("⬅️ Kembali"):
-        st.session_state.page = "home"
+            # Visualisasi kategori BMI dengan progress bar
+            if kategori == "Kurus":
+                st.progress(0.25)
+                st.warning("💡 Tips: Anda berada dalam kategori Kurus. Perhatikan asupan nutrisi dan konsultasikan dengan ahli gizi.")
+            elif kategori == "Normal":
+                st.progress(0.5)
+                st.success("🎉 Selamat! Anda berada dalam kategori Normal. Pertahankan gaya hidup sehat!")
+            elif kategori == "Gemuk":
+                st.progress(0.75)
+                st.warning("💡 Tips: Anda berada dalam kategori Gemuk. Mulailah pola hidup sehat dan olahraga teratur.")
+            else:
+                st.progress(1.0)
+                st.error("⚠️ Perhatian: Anda berada dalam kategori Obesitas. Segera konsultasikan dengan dokter atau ahli gizi.")
+
+    # Tombol "Kembali" untuk kembali ke halaman utama
+    if st.button("⬅️ Kembali ke Home", key="back_button"):
+        go_home()
