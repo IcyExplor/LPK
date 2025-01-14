@@ -48,7 +48,7 @@ if st.session_state.page == "home":
     # Menampilkan daftar kontributor dengan styling
     st.markdown(
         """
-        <div style='background-color: #F2F3F4; padding: 10px; border-radius: 10px;'>
+        <div style='background-color: #0e1117; padding: 10px; border-radius: 10px;'>
             <ul style='color: #2E86C1; font-size: 16px;'>
         """ +
         "".join([f"<li>{contributor}</li>" for contributor in contributors]) +
