@@ -1,20 +1,105 @@
 import streamlit as st
 
-# Title and subtitle for the application
-st.title('Aplikasi Pengukur Body Mass Index (BMI): Solusi Praktis Untuk Pemantauan Kesehatan')
+# Inisialisasi session state untuk mengontrol tampilan
+if "page" not in st.session_state:
+    st.session_state.page = "home"
 
-# List of contributors
-contributors = [
-    "Dwinta Syafa Salsabilla (2350086)",
-    "Fasya Anindya Zahrani (2350089)",
-    "Ilman Hakim Muhardian (2350099)",
-    "Muthia Ammara Shafira (2350113)",
-    "Zahid Nashrulloh Khoerudin (2350141)"
-]
+# Fungsi untuk berpindah ke tampilan berikutnya
+def next_page():
+    st.session_state.page = "next_page"
 
-# Display contributors as subtitles
-for contributor in contributors:
-    st.subheader(contributor)
+# Tampilan Home
+if st.session_state.page == "home":
+    # Judul aplikasi dengan styling menggunakan markdown
+    st.markdown(
+        """
+        <h1 style='text-align: center; color: #2E86C1;'>
+            Aplikasi Pengukur Body Mass Index (BMI)
+        </h1>
+        <h3 style='text-align: center; color: #5D6D7E;'>
+            Solusi Praktis Untuk Pemantauan Kesehatan
+        </h3>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Garis pemisah untuk estetika
+    st.markdown("---")
+
+    # List kontributor dengan styling menarik
+    st.markdown(
+        """
+        <h2 style='text-align: center; color: #2E86C1;'>
+            🧑‍💻 Kontributor 🧑‍💻
+        </h2>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Daftar kontributor dengan bullet points dan warna teks
+    contributors = [
+        "Dwinta Syafa Salsabilla (2350086)",
+        "Fasya Anindya Zahrani (2350089)",
+        "Ilman Hakim Muhardian (2350099)",
+        "Muthia Ammara Shafira (2350113)",
+        "Zahid Nashrulloh Khoerudin (2350141)"
+    ]
+
+    # Menampilkan daftar kontributor dengan styling
+    st.markdown(
+        """
+        <div style='background-color: #F2F3F4; padding: 10px; border-radius: 10px;'>
+            <ul style='color: #2E86C1; font-size: 16px;'>
+        """ +
+        "".join([f"<li>{contributor}</li>" for contributor in contributors]) +
+        """
+            </ul>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Garis pemisah di akhir
+    st.markdown("---")
+
+    # Tombol "Next" untuk berpindah ke tampilan berikutnya
+    st.button("Next ➡️", on_click=next_page)
+
+# Tampilan Berikutnya
+elif st.session_state.page == "next_page":
+    st.markdown(
+        """
+        <h1 style='text-align: center; color: #2E86C1;'>
+            Selamat Datang di Tampilan Berikutnya!
+        </h1>
+        <h3 style='text-align: center; color: #5D6D7E;'>
+            Silakan masukkan data Anda untuk menghitung BMI.
+        </h3>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Garis pemisah
+    st.markdown("---")
+
+    # Form input untuk menghitung BMI
+    with st.form("bmi_form"):
+        st.write("Masukkan data Anda:")
+        weight = st.number_input("Berat Badan (kg)", min_value=0.0, format="%.2f")
+        height = st.number_input("Tinggi Badan (cm)", min_value=0.0, format="%.2f")
+        submitted = st.form_submit_button("Hitung BMI")
+
+        if submitted:
+            if weight > 0 and height > 0:
+                height_in_meters = height / 100
+                bmi = weight / (height_in_meters ** 2)
+                st.success(f"BMI Anda adalah: {bmi:.2f}")
+            else:
+                st.error("Masukkan berat dan tinggi yang valid!")
+
+    # Tombol "Kembali" untuk kembali ke tampilan awal
+    if st.button("⬅️ Kembali"):
+        st.session_state.page = "home"
 
 # YANG PENTING KELAR
 
