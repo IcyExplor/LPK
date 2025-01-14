@@ -36,6 +36,16 @@ if st.session_state.page == "home":
         unsafe_allow_html=True
     )
 
+    # Display an image (replace 'image_url' with the actual image URL or file path)
+    st.markdown(
+        """
+        <div style='text-align: center; margin-top: 20px; margin-bottom: 20px;'>
+            <img src='https://static.vecteezy.com/system/resources/previews/016/828/833/original/bmi-classification-chart-measurement-woman-colorful-infographic-with-ruler-female-body-mass-index-scale-collection-from-underweight-to-overweight-fit-person-different-weight-level-eps-vector.jpg' alt='Team Photo' style='border-radius: 10px; width: 100%; max-width: 400px;'>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+   
     # Daftar kontributor dengan bullet points dan warna teks
     contributors = [
         "Dwinta Syafa Salsabilla (2350086)",
