@@ -1,3 +1,7 @@
+import re, random
+import streamlit as st
+# YANG PENTING KELAR
+
 def hitung_berat_badan_ideal(tinggi, jenis_kelamin):
     """
     Menghitung berat badan ideal berdasarkan tinggi dan jenis kelamin.
