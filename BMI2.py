@@ -96,21 +96,6 @@ elif st.session_state.page == "next_page":
 # Garis pemisah
     st.markdown("---")
 
-    # Form input untuk menghitung BMI
-    with st.form("bmi_form"):
-        st.write("Masukkan data Anda:")
-        weight = st.number_input("Berat Badan (kg)", min_value=0.0, format="%.2f")
-        height = st.number_input("Tinggi Badan (cm)", min_value=0.0, format="%.2f")
-        submitted = st.form_submit_button("Hitung BMI")
-        
-        if submitted:
-            if weight > 0 and height > 0:
-                height_in_meters = height / 100
-                bmi = weight / (height_in_meters ** 2)
-                st.success(f"BMI Anda adalah: {bmi:.2f}")
-            else:
-                st.error("Masukkan berat dan tinggi yang valid!")
-
 def hitung_berat_badan_ideal(tinggi, jenis_kelamin):
     """
     Menghitung berat badan ideal berdasarkan tinggi dan jenis kelamin.
