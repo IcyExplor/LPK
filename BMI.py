@@ -40,7 +40,7 @@ if st.session_state.page == "home":
     st.markdown(
         """
         <h2 style='text-align: center; color: #2E86C1;'>
-                    🧑‍💻 Kelompok 5 🧑‍💻
+            🧑‍💻 Kelompok 5 🧑‍💻
         </h2>
         """,
         unsafe_allow_html=True
