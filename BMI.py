@@ -26,16 +26,6 @@ if st.session_state.page == "home":
     # Garis pemisah untuk estetika
     st.markdown("---")
 
-    # List kontributor dengan styling menarik
-    st.markdown(
-        """
-        <h2 style='text-align: center; color: #2E86C1;'>
-            🧑‍💻 Kelompok 5 🧑‍💻
-        </h2>
-        """,
-        unsafe_allow_html=True
-    )
-
     # Display an image (replace 'image_url' with the actual image URL or file path)
     st.markdown(
         """
@@ -45,7 +35,17 @@ if st.session_state.page == "home":
         """,
         unsafe_allow_html=True
     )
-   
+
+    # List kontributor dengan styling menarik
+    st.markdown(
+        """
+        <h2 style='text-align: center; color: #2E86C1;'>
+                    🧑‍💻 Kelompok 5 🧑‍💻
+        </h2>
+        """,
+        unsafe_allow_html=True
+    )
+
     # Daftar kontributor dengan bullet points dan warna teks
     contributors = [
         "Dwinta Syafa Salsabilla (2350086)",
