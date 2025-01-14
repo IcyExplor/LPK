@@ -18,7 +18,7 @@ if st.session_state.page == "home":
     st.markdown(
         """
         <h1 style='text-align: center; color: #2E86C1; animation: fadeIn 2s;'>
-            🏋️‍♂️ Aplikasi Pengukur Body Mass Index (BMI) 🏋️‍♀️
+            plikasi Pengukur Body Mass Index (BMI)
         </h1>
         <style>
             @keyframes fadeIn {
@@ -73,20 +73,12 @@ if st.session_state.page == "home":
         unsafe_allow_html=True
     )
 
-    # Tombol untuk melanjutkan ke halaman berikutnya
-    st.markdown(
-        """
-        <div style="text-align: center;">
-            <button style="background-color: #2E86C1; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">
-                Mulai Sekarang
-            </button>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-    if st.button("Mulai Sekarang", key="start_button"):
-        next_page()
+    # Garis pemisah di akhir
+    st.markdown("---")
 
+    # Tombol "Next" untuk berpindah ke tampilan berikutnya
+    st.button("Next ➡️", on_click=next_page)
+    
 # Halaman berikutnya (Next Page)
 elif st.session_state.page == "next_page":
     # Judul halaman berikutnya
