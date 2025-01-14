@@ -8,27 +8,28 @@ if "page" not in st.session_state:
 def next_page():
     st.session_state.page = "next_page"
 
-# Tampilan Home
+# Home Page
 if st.session_state.page == "home":
-    # Judul aplikasi dengan styling menggunakan markdown
+    # Title with Markdown Styling
     st.markdown(
         """
         <h1 style='text-align: center; color: #2E86C1;'>
             Aplikasi Pengukur Body Mass Index (BMI)
         </h1>
-        <h3 style='text-align: center; color: #5D6D7E;'>
-            Solusi Praktis Untuk Pemantauan Kesehatan
-        </h3>
         """,
         unsafe_allow_html=True
     )
 
-     # Display an image (replace 'image_url' with the actual image URL or file path)
+    # Insert Image from Google (or any online source)
+    image_url = "https://static.vecteezy.com/system/resources/previews/016/828/833/original/bmi-classification-chart-measurement-woman-colorful-infographic-with-ruler-female-body-mass-index-scale-collection-from-underweight-to-overweight-fit-person-different-weight-level-eps-vector.jpg"  # Ganti dengan URL gambar dari Google
+    st.image(image_url, use_column_width=True, caption="Ilustrasi Kesehatan")
+
+    # Subtitle with Markdown Styling
     st.markdown(
         """
-        <div style='text-align: center; margin-top: 20px; margin-bottom: 20px;'>
-            <img src='https://static.vecteezy.com/system/resources/previews/016/828/833/original/bmi-classification-chart-measurement-woman-colorful-infographic-with-ruler-female-body-mass-index-scale-collection-from-underweight-to-overweight-fit-person-different-weight-level-eps-vector.jpg' alt='Team Photo' style='border-radius: 10px; width: 100%; max-width: 400px;'>
-        </div>
+        <h3 style='text-align: center; color: #5D6D7E;'>
+            Solusi Praktis Untuk Pemantauan Kesehatan
+        </h3>
         """,
         unsafe_allow_html=True
     )
