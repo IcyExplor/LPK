@@ -8,9 +8,31 @@ if "page" not in st.session_state:
 def next_page():
     st.session_state.page = "next_page"
 
+# Fungsi untuk menghitung berat badan ideal
+def hitung_berat_badan_ideal(tinggi, jenis_kelamin):
+    if jenis_kelamin == 'Pria':
+        return 0.9 * (tinggi - 100)
+    else:
+        return 0.85 * (tinggi - 100)
+
 # Fungsi untuk kembali ke halaman utama
 def go_home():
     st.session_state.page = "home"
+
+# Fungsi untuk menentukan kategori BMI
+def kategori_bmi(bmi):
+    if bmi < 18.5:
+        return "Kurus"
+    elif 18.5 <= bmi < 24.9:
+        return "Normal"
+    elif 25 <= bmi < 29.9:
+        return "Gemuk"
+    else:
+        return "Obesitas"
+
+# Fungsi untuk menghitung BMI
+def hitung_bmi(berat, tinggi):
+    return berat / ((tinggi / 100) ** 2)
 
 # Home Page
 if st.session_state.page == "home":
