@@ -1,5 +1,12 @@
-import re, random
 import streamlit as st
+
+st.title('Aplikasi Pengukur Body Mass Index (BMI) : Solusi Praktis Untuk Pemantauan Kesehatan')
+st.subtitle('Dwinta Syafa Salsabilla (2350086)')
+st.subtitle('Fasya Anindya Zahrani (2350089)')
+st.subtitle('Ilman Hakim Muhardian (2350099)')
+st.subtitle('Muthia Ammara Shafira (2350113)')
+st.subtitle('Zahid Nashrulloh Khoerudin (2350141)')
+
 # YANG PENTING KELAR
 
 def hitung_berat_badan_ideal(tinggi, jenis_kelamin):
