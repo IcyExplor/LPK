@@ -30,7 +30,7 @@ if st.session_state.page == "home":
     st.markdown(
         """
         <h2 style='text-align: center; color: #2E86C1;'>
-            🧑‍💻 Kontributor 🧑‍💻
+            🧑‍💻 Kelompok 5 🧑‍💻
         </h2>
         """,
         unsafe_allow_html=True
@@ -70,7 +70,7 @@ elif st.session_state.page == "next_page":
     st.markdown(
         """
         <h1 style='text-align: center; color: #2E86C1;'>
-            Selamat Datang di Tampilan Berikutnya!
+            Aplikasi Pengukur Body Mass Index (BMI)
         </h1>
         <h3 style='text-align: center; color: #5D6D7E;'>
             Silakan masukkan data Anda untuk menghitung BMI.
