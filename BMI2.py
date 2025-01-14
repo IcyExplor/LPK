@@ -61,7 +61,7 @@ if st.session_state.page == "home":
         <h2 style='text-align: center; color: #2E86C1;'>
              Kelompok 5 
         </h2>
-        <p style='text-align: center; color: #5D6D7E;'>
+        <p style='text-align: Left; color: #5D6D7E;'>
             Anggota: <br>
             - Dwinta Syafa Salsabilla (2350086) <br>
             - Fasya Anindya Zahrani (2350089) <br>
