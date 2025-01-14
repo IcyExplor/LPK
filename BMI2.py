@@ -59,13 +59,15 @@ if st.session_state.page == "home":
     st.markdown(
         """
         <h2 style='text-align: center; color: #2E86C1;'>
-            🧑‍💻 Kelompok 5 🧑‍💻
+             Kelompok 5 
         </h2>
         <p style='text-align: center; color: #5D6D7E;'>
             Anggota: <br>
-            - Nama Anggota 1 <br>
-            - Nama Anggota 2 <br>
-            - Nama Anggota 3 <br>
+            - Dwinta Syafa Salsabilla (2350086) <br>
+            - Fasya Anindya Zahrani (2350089) <br>
+            - Ilman Hakim Muhardian (2350099) <br>
+            - Muthia Ammara Shafira (2350113) <br>
+            - Zahid Nashrulloh Khoerudin (2350141) <br>
         </p>
         """,
         unsafe_allow_html=True
