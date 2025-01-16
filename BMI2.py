@@ -30,19 +30,46 @@ def hitung_bmi(berat, tinggi):
 def go_home():
     st.session_state.page = "home"
 
+# Gaya Global (Background dan Font)
+def set_background():
+    st.markdown(
+        """
+        <style>
+        body {
+            background-image: url('https://www.teahub.io/photos/full/8-85399_abstract-minimalist-background-hd.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+        }
+        .stButton button {
+            background-color: #2E86C1;
+            color: white;
+            border-radius: 5px;
+            padding: 8px 15px;
+            font-weight: bold;
+        }
+        .stButton button:hover {
+            background-color: #1B4F72;
+        }
+        h1, h2, h3 {
+            color: white;
+        }
+        p, label {
+            color: #FDFEFE;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
 # Halaman Home
 def home_page():
     st.markdown(
         """
-        <h1 style='text-align: center; color: #2E86C1; animation: fadeIn 2s;'>
+        <h1 style='text-align: center;'>
             Aplikasi Pengukur Body Mass Index (BMI)
         </h1>
-        <style>
-            @keyframes fadeIn {
-                from { opacity: 0; }
-                to { opacity: 1; }
-            }
-        </style>
         """,
         unsafe_allow_html=True
     )
@@ -59,16 +86,14 @@ def home_page():
         unsafe_allow_html=True
     )
 
-    st.markdown("<p style='text-align: center; color: #5D6D7E;'>BMI Calculator</p>", unsafe_allow_html=True)
-
     st.markdown("---")
 
     st.markdown(
         """
-        <h2 style='text-align: center; color: #2E86C1;'>
+        <h2 style='text-align: center;'>
              Kelompok 5 
         </h2>
-        <p style='text-align: Left; color: #5D6D7E;'>
+        <p style='text-align: Left;'>
             Anggota: <br>
             - Dwinta Syafa Salsabilla (2350086) <br>
             - Fasya Anindya Zahrani (2350089) <br>
@@ -94,7 +119,7 @@ def home_page():
 def penjelasan_bmi():
     st.markdown(
         """
-        <h1 style='text-align: center; color: #2E86C1; animation: fadeIn 2s;'>
+        <h1 style='text-align: center;'>
             Penjelasan tentang BMI
         </h1>
         """,
@@ -143,7 +168,7 @@ def penjelasan_bmi():
 def kalkulator_bmi():
     st.markdown(
         """
-        <h1 style='text-align: center; color: #2E86C1;'>
+        <h1 style='text-align: center;'>
             Aplikasi Pengukur Body Mass Index (BMI)
         </h1>
         """,
@@ -186,6 +211,9 @@ def kalkulator_bmi():
 
     if st.button("Kembali ke Home 🏠"):
         go_home()
+
+# Set Global Background
+set_background()
 
 # Main App Logic
 if st.session_state.page == "home":
