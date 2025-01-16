@@ -103,6 +103,6 @@ elif st.session_state.page == "next_page":
         1. Konsumsi makanan bergizi seimbang.
         2. Rutin berolahraga.
         3. Hindari kebiasaan tidak sehat seperti merokok atau konsumsi alkohol berlebihan.
-            4. Periksa kesehatan secara berkala.
+        4. Periksa kesehatan secara berkala.
             """
         )
