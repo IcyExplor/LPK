@@ -139,11 +139,6 @@ def penjelasan_bmi():
         sesuai dengan tinggi badannya. BMI dihitung dengan membagi berat badan (dalam kilogram) dengan kuadrat tinggi badan 
         (dalam meter).
 
-        ### Rumus BMI:
-        \[
-        BMI = \frac{Berat\ Badan\ (kg)}{(Tinggi\ Badan\ (m))^2}
-        \]
-
         ### Kategori BMI:
         - **Kurus**: BMI < 18.5
         - **Normal**: 18.5 ≤ BMI < 24.9
