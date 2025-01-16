@@ -4,20 +4,12 @@ import streamlit as st
 if "page" not in st.session_state:
     st.session_state.page = "home"
 
-# Fungsi untuk berpindah ke tampilan berikutnya
-def next_page():
-    st.session_state.page = "next_page"
-
 # Fungsi untuk menghitung berat badan ideal
 def hitung_berat_badan_ideal(tinggi, jenis_kelamin):
     if jenis_kelamin == 'Pria':
         return 0.9 * (tinggi - 100)
     else:
         return 0.85 * (tinggi - 100)
-
-# Fungsi untuk kembali ke halaman utama
-def go_home():
-    st.session_state.page = "home"
 
 # Fungsi untuk menentukan kategori BMI
 def kategori_bmi(bmi):
@@ -34,39 +26,50 @@ def kategori_bmi(bmi):
 def hitung_bmi(berat, tinggi):
     return berat / ((tinggi / 100) ** 2)
 
-# Home Page
-if st.session_state.page == "home":
-    # Title dengan Markdown Styling dan animasi sederhana
+# Fungsi untuk kembali ke halaman utama
+def go_home():
+    st.session_state.page = "home"
+
+# Gaya Global (Background dan Font)
+def set_background():
     st.markdown(
         """
-        <h1 style='text-align: center; color: #2E86C1; animation: fadeIn 2s;'>
-            Aplikasi Pengukur Body Mass Index (BMI)
-        </h1>
         <style>
-            @keyframes fadeIn {
-                from { opacity: 0; }
-                to { opacity: 1; }
-            }
+        body {
+            background-image: url('https://www.teahub.io/photos/full/8-85399_abstract-minimalist-background-hd.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+        }
+        .stButton button {
+            background-color: #2E86C1;
+            color: white;
+            border-radius: 5px;
+            padding: 8px 15px;
+            font-weight: bold;
+        }
+        .stButton button:hover {
+            background-color: #1B4F72;
+        }
+        h1, h2, h3 {
+            color: white;
+        }
+        p, label {
+            color: #FDFEFE;
+        }
         </style>
         """,
         unsafe_allow_html=True
     )
 
-    # Menyisipkan gambar dari URL dengan efek hover
-    image_url = "https://static.vecteezy.com/system/resources/previews/016/828/833/original/bmi-classification-chart-measurement-woman-colorful-infographic-with-ruler-female-body-mass-index-scale-collection-from-underweight-to-overweight-fit-person-different-weight-level-eps-vector.jpg"
-    st.markdown(
-        f"""
-        <div style="text-align: center;">
-            <img src="{image_url}" style="width: 100%; max-width: 600px; border-radius: 15px; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-    st.markdown("<p style='text-align: center; color: #5D6D7E;'>BMI Calculator</p>", unsafe_allow_html=True)
-
-    # Subtitle dengan Markdown Styling
+# Halaman Home
+def home_page():
     st.markdown(
         """
+        <h1 style='text-align: center;'>
+            Aplikasi Pengukur Body Mass Index (BMI)
+        </h1>
         <h3 style='text-align: center; color: #5D6D7E;'>
             Solusi Praktis Untuk Pemantauan Kesehatan
         </h3>
@@ -74,16 +77,26 @@ if st.session_state.page == "home":
         unsafe_allow_html=True
     )
 
-    # Garis pemisah untuk estetika
+    image_url = "https://static.vecteezy.com/system/resources/previews/016/828/833/original/bmi-classification-chart-measurement-woman-colorful-infographic-with-ruler-female-body-mass-index-scale-collection-from-underweight-to-overweight-fit-person-different-weight-level-eps-vector.jpg"
+    st.markdown(
+        f"""
+        <div style="text-align: center;">
+            <img src="{image_url}" style="width: 100%; max-width: 600px; border-radius: 15px; transition: transform 0.3s ease;" 
+                 onmouseover="this.style.transform='scale(1.05)'" 
+                 onmouseout="this.style.transform='scale(1)'">
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
     st.markdown("---")
 
-    # List kontributor dengan styling menarik
     st.markdown(
         """
-        <h2 style='text-align: center; color: #2E86C1;'>
+        <h2 style='text-align: center;'>
              Kelompok 5 
         </h2>
-        <p style='text-align: Left; color: #5D6D7E;'>
+        <p style='text-align: Left;'>
             Anggota: <br>
             - Dwinta Syafa Salsabilla (2350086) <br>
             - Fasya Anindya Zahrani (2350089) <br>
@@ -95,18 +108,67 @@ if st.session_state.page == "home":
         unsafe_allow_html=True
     )
 
-    # Garis pemisah di akhir
     st.markdown("---")
 
-    # Tombol "Next" untuk berpindah ke tampilan berikutnya
-    if st.button("Next ➡️", key="next_button"):
-        next_page()
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("Penjelasan tentang BMI 📘"):
+            st.session_state.page = "penjelasan"
+    with col2:
+        if st.button("Mulai Hitung BMI 🧮"):
+            st.session_state.page = "kalkulator"
 
-# Tampilan Berikutnya (BMI Calculator)
-elif st.session_state.page == "next_page":
+# Halaman Penjelasan BMI
+def penjelasan_bmi():
     st.markdown(
         """
-        <h1 style='text-align: center; color: #2E86C1;'>
+        <h1 style='text-align: center;'>
+            Penjelasan tentang BMI
+        </h1>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Garis Pemisah
+    st.markdown("---")
+
+    st.markdown(
+        """
+        ### Apa itu BMI?
+        **BMI (Body Mass Index)** atau Indeks Massa Tubuh adalah ukuran yang digunakan untuk menilai apakah berat badan seseorang 
+        sesuai dengan tinggi badannya. BMI dihitung dengan membagi berat badan (dalam kilogram) dengan kuadrat tinggi badan 
+        (dalam meter).
+
+        ### Kategori BMI:
+        - **Kurus**: BMI < 18.5
+        - **Normal**: 18.5 ≤ BMI < 24.9
+        - **Gemuk**: 25 ≤ BMI < 29.9
+        - **Obesitas**: BMI ≥ 30
+
+        ### Mengapa BMI Penting?
+        BMI membantu Anda memahami apakah berat badan Anda berada dalam kisaran yang sehat. Namun, perlu diingat bahwa BMI 
+        tidak memperhitungkan komposisi tubuh (seperti massa otot vs lemak), sehingga hasilnya mungkin tidak selalu akurat 
+        untuk semua orang, terutama atlet atau orang dengan massa otot tinggi.
+
+        ### Tips untuk Menjaga BMI Sehat:
+        1. Konsumsi makanan bergizi seimbang.
+        2. Rutin berolahraga.
+        3. Hindari kebiasaan tidak sehat seperti merokok atau konsumsi alkohol berlebihan.
+        4. Periksa kesehatan secara berkala.
+        """
+    )
+
+    # Garis pemisah
+    st.markdown("---")
+
+    if st.button("Kembali ke Home 🏠"):
+        go_home()
+
+# Kalkulator BMI
+def kalkulator_bmi():
+    st.markdown(
+        """
+        <h1 style='text-align: center;'>
             Aplikasi Pengukur Body Mass Index (BMI)
         </h1>
         <h3 style='text-align: center; color: #5D6D7E;'>
@@ -116,7 +178,7 @@ elif st.session_state.page == "next_page":
         unsafe_allow_html=True
     )
 
-    # Garis pemisah
+    # Garis Pemisah
     st.markdown("---")
 
     # Input fields dengan validasi
@@ -158,6 +220,16 @@ elif st.session_state.page == "next_page":
                 st.progress(1.0)
                 st.error("⚠️ Perhatian: Anda berada dalam kategori Obesitas. Segera konsultasikan dengan dokter atau ahli gizi.")
 
-    # Tombol "Kembali" untuk kembali ke halaman utama
-    if st.button("⬅️ Kembali ke Home", key="back_button"):
+    if st.button("Kembali ke Home 🏠"):
         go_home()
+
+# Set Global Background
+set_background()
+
+# Main App Logic
+if st.session_state.page == "home":
+    home_page()
+elif st.session_state.page == "penjelasan":
+    penjelasan_bmi()
+elif st.session_state.page == "kalkulator":
+    kalkulator_bmi()
