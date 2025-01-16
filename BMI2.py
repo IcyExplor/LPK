@@ -26,9 +26,12 @@ def kategori_bmi(bmi):
 def hitung_bmi(berat, tinggi):
     return berat / ((tinggi / 100) ** 2)
 
+# Fungsi untuk kembali ke halaman utama
+def go_home():
+    st.session_state.page = "home"
+
 # Home Page
-if st.session_state.page == "home":
-    # Title dengan Markdown Styling dan animasi sederhana
+def home_page():
     st.markdown(
         """
         <h1 style='text-align: center; color: #2E86C1; animation: fadeIn 2s;'>
@@ -90,12 +93,12 @@ if st.session_state.page == "home":
     # Garis pemisah di akhir
     st.markdown("---")
 
-def MenuUtama():
-    pilihan = st.sidebar.selectbox('Menu', ['Penjelasan tentang BMI', 'Aplikasi Pengukur BMI'])
-    if pilihan == 'Penjelasan tentang BMI': ()
-    elif pilihan == 'Aplikasi Pengukur BMI': hitung_bmi()
+    # Tombol untuk menuju ke kalkulator BMI
+    if st.button("Mulai Hitung BMI 🧮"):
+        st.session_state.page = "kalkulator"
 
-def PenjelasanBMI():
+# Penjelasan tentang BMI
+def penjelasan_bmi():
     st.markdown(
         """
         <h1 style='text-align: center; color: #2E86C1; animation: fadeIn 2s;'>
@@ -134,11 +137,15 @@ def PenjelasanBMI():
         2. Rutin berolahraga.
         3. Hindari kebiasaan tidak sehat seperti merokok atau konsumsi alkohol berlebihan.
         4. Periksa kesehatan secara berkala.
-            """
-        )
+        """
+    )
 
-# BMI Calculator
-def KalkulatorBMI():
+    # Tombol untuk kembali ke halaman utama
+    if st.button("Kembali ke Home 🏠"):
+        go_home()
+
+# Kalkulator BMI
+def kalkulator_bmi():
     st.markdown(
         """
         <h1 style='text-align: center; color: #2E86C1;'>
@@ -183,7 +190,7 @@ def KalkulatorBMI():
             if kategori == "Kurus":
                 st.progress(0.25)
                 st.warning("💡 Tips: Anda berada dalam kategori Kurus. Perhatikan asupan nutrisi dan konsultasikan dengan ahli gizi.")
-            elif kategori == "Normal":
+                        elif kategori == "Normal":
                 st.progress(0.5)
                 st.success("🎉 Selamat! Anda berada dalam kategori Normal. Pertahankan gaya hidup sehat!")
             elif kategori == "Gemuk":
@@ -192,3 +199,15 @@ def KalkulatorBMI():
             else:
                 st.progress(1.0)
                 st.error("⚠️ Perhatian: Anda berada dalam kategori Obesitas. Segera konsultasikan dengan dokter atau ahli gizi.")
+
+            # Tombol untuk kembali ke halaman utama
+            if st.button("Kembali ke Home 🏠", key="kembali_home_button"):
+                go_home()
+
+# Main App Logic
+if st.session_state.page == "home":
+    home_page()
+elif st.session_state.page == "penjelasan":
+    penjelasan_bmi()
+elif st.session_state.page == "kalkulator":
+    kalkulator_bmi()
