@@ -30,7 +30,7 @@ def hitung_bmi(berat, tinggi):
 def go_home():
     st.session_state.page = "home"
 
-# Home Page
+# Halaman Home
 def home_page():
     st.markdown(
         """
@@ -47,32 +47,22 @@ def home_page():
         unsafe_allow_html=True
     )
 
-    # Menyisipkan gambar dari URL dengan efek hover
     image_url = "https://static.vecteezy.com/system/resources/previews/016/828/833/original/bmi-classification-chart-measurement-woman-colorful-infographic-with-ruler-female-body-mass-index-scale-collection-from-underweight-to-overweight-fit-person-different-weight-level-eps-vector.jpg"
     st.markdown(
         f"""
         <div style="text-align: center;">
-            <img src="{image_url}" style="width: 100%; max-width: 600px; border-radius: 15px; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+            <img src="{image_url}" style="width: 100%; max-width: 600px; border-radius: 15px; transition: transform 0.3s ease;" 
+                 onmouseover="this.style.transform='scale(1.05)'" 
+                 onmouseout="this.style.transform='scale(1)'">
         </div>
         """,
         unsafe_allow_html=True
     )
+
     st.markdown("<p style='text-align: center; color: #5D6D7E;'>BMI Calculator</p>", unsafe_allow_html=True)
 
-    # Subtitle dengan Markdown Styling
-    st.markdown(
-        """
-        <h3 style='text-align: center; color: #5D6D7E;'>
-            Solusi Praktis Untuk Pemantauan Kesehatan
-        </h3>
-        """,
-        unsafe_allow_html=True
-    )
-
-    # Garis pemisah untuk estetika
     st.markdown("---")
 
-    # List kontributor dengan styling menarik
     st.markdown(
         """
         <h2 style='text-align: center; color: #2E86C1;'>
@@ -90,14 +80,17 @@ def home_page():
         unsafe_allow_html=True
     )
 
-    # Garis pemisah di akhir
     st.markdown("---")
 
-    # Tombol untuk menuju ke kalkulator BMI
-    if st.button("Mulai Hitung BMI 🧮"):
-        st.session_state.page = "kalkulator"
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("Penjelasan tentang BMI 📘"):
+            st.session_state.page = "penjelasan"
+    with col2:
+        if st.button("Mulai Hitung BMI 🧮"):
+            st.session_state.page = "kalkulator"
 
-# Penjelasan tentang BMI
+# Halaman Penjelasan BMI
 def penjelasan_bmi():
     st.markdown(
         """
@@ -108,7 +101,8 @@ def penjelasan_bmi():
         unsafe_allow_html=True
     )
 
-    # Explanation about BMI
+    st.markdown("---")
+
     st.markdown(
         """
         ### Apa itu BMI?
@@ -140,7 +134,8 @@ def penjelasan_bmi():
         """
     )
 
-    # Tombol untuk kembali ke halaman utama
+    st.markdown("---")
+
     if st.button("Kembali ke Home 🏠"):
         go_home()
 
@@ -151,58 +146,46 @@ def kalkulator_bmi():
         <h1 style='text-align: center; color: #2E86C1;'>
             Aplikasi Pengukur Body Mass Index (BMI)
         </h1>
-        <h3 style='text-align: center; color: #5D6D7E;'>
-            Silakan masukkan data Anda untuk menghitung BMI.
-        </h3>
         """,
         unsafe_allow_html=True
     )
 
-    # Garis pemisah
     st.markdown("---")
 
-    # Input fields dengan validasi
     col1, col2 = st.columns(2)
     with col1:
-        tinggi = st.number_input("Masukkan tinggi badan Anda (cm):", min_value=0.0, format="%.2f", key="tinggi")
+        tinggi = st.number_input("Masukkan tinggi badan Anda (cm):", min_value=1.0, format="%.2f")
     with col2:
-        berat = st.number_input("Masukkan berat badan Anda (kg):", min_value=0.0, format="%.2f", key="berat")
+        berat = st.number_input("Masukkan berat badan Anda (kg):", min_value=1.0, format="%.2f")
 
-    jenis_kelamin = st.radio("Masukkan jenis kelamin Anda:", ('Pria', 'Wanita'), key="jenis_kelamin")
+    jenis_kelamin = st.radio("Masukkan jenis kelamin Anda:", ('Pria', 'Wanita'))
 
-    # Tombol untuk menghitung BMI
-    if st.button("Hitung BMI 🧮", key="hitung_bmi_button"):
-        if tinggi <= 0 or berat <= 0:
-            st.error("Tinggi dan berat badan harus lebih dari 0.")
-        else:
-            # Hitung berat ideal, BMI, dan kategori
+    if st.button("Hitung BMI 🧮"):
+        if tinggi > 0 and berat > 0:
             berat_ideal = hitung_berat_badan_ideal(tinggi, jenis_kelamin)
             bmi = hitung_bmi(berat, tinggi)
             kategori = kategori_bmi(bmi)
 
-            # Tampilkan hasil dengan styling menarik
             st.markdown("### 🎯 Hasil Perhitungan")
             st.markdown(f"**Berat Badan Ideal Anda:** `{berat_ideal:.2f} kg`")
             st.markdown(f"**Indeks Massa Tubuh (BMI):** `{bmi:.2f}`")
             st.markdown(f"**Kategori Berat Badan:** `{kategori}`")
 
-            # Visualisasi kategori BMI dengan progress bar
             if kategori == "Kurus":
                 st.progress(0.25)
-                st.warning("💡 Tips: Anda berada dalam kategori Kurus. Perhatikan asupan nutrisi dan konsultasikan dengan ahli gizi.")
-                        elif kategori == "Normal":
+                st.warning("💡 Anda berada dalam kategori Kurus.")
+            elif kategori == "Normal":
                 st.progress(0.5)
-                st.success("🎉 Selamat! Anda berada dalam kategori Normal. Pertahankan gaya hidup sehat!")
+                st.success("🎉 Anda berada dalam kategori Normal.")
             elif kategori == "Gemuk":
                 st.progress(0.75)
-                st.warning("💡 Tips: Anda berada dalam kategori Gemuk. Mulailah pola hidup sehat dan olahraga teratur.")
+                st.warning("💡 Anda berada dalam kategori Gemuk.")
             else:
                 st.progress(1.0)
-                st.error("⚠️ Perhatian: Anda berada dalam kategori Obesitas. Segera konsultasikan dengan dokter atau ahli gizi.")
+                st.error("⚠️ Anda berada dalam kategori Obesitas.")
 
-            # Tombol untuk kembali ke halaman utama
-            if st.button("Kembali ke Home 🏠", key="kembali_home_button"):
-                go_home()
+    if st.button("Kembali ke Home 🏠"):
+        go_home()
 
 # Main App Logic
 if st.session_state.page == "home":
