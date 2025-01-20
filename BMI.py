@@ -36,7 +36,7 @@ def set_background():
         """
         <style>
         body {
-            background-image: url('https://www.teahub.io/photos/full/8-85399_abstract-minimalist-background-hd.jpg');
+            background-image: url('https://e1.pxfuel.com/desktop-wallpaper/398/252/desktop-wallpaper-black-backgrounds-better-for-eyes-black-plain.jpg');
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
