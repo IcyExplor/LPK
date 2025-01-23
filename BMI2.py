@@ -1,20 +1,19 @@
 import streamlit as st
 
-# Inisialisasi session state untuk mengontrol tampilan
+# Initialize session state to control the page view
 if "page" not in st.session_state:
     st.session_state.page = "home"
 
-# Fungsi untuk menghitung berat badan ideal
+# Function to calculate ideal body weight
 def hitung_berat_badan_ideal(tinggi, jenis_kelamin):
     if jenis_kelamin == 'Pria':
         return 0.9 * (tinggi - 100)
     else:
         return 0.85 * (tinggi - 100)
 
-# Fungsi untuk menentukan kategori BMI berdasarkan usia dan jenis kelamin (untuk anak-anak)
+# Function to categorize BMI based on age and gender (for children)
 def kategori_bmi_untuk_anak(bmi, usia, jenis_kelamin):
-    if usia < 18:  # Hanya untuk anak-anak dan remaja
-        # Tabel persentil WHO untuk anak berdasarkan usia dan jenis kelamin
+    if usia < 18:  # Only for children and adolescents
         if jenis_kelamin == 'Pria':
             if bmi < 14.5:
                 return "Kurus"
@@ -24,7 +23,7 @@ def kategori_bmi_untuk_anak(bmi, usia, jenis_kelamin):
                 return "Gemuk"
             else:
                 return "Obesitas"
-        else:  # Wanita
+        else:  # For women
             if bmi < 14.0:
                 return "Kurus"
             elif 14.0 <= bmi < 18.0:
@@ -33,7 +32,7 @@ def kategori_bmi_untuk_anak(bmi, usia, jenis_kelamin):
                 return "Gemuk"
             else:
                 return "Obesitas"
-    else:  # Untuk dewasa dan lansia
+    else:  # For adults
         if bmi < 18.5:
             return "Kurus"
         elif 18.5 <= bmi < 24.9:
@@ -43,154 +42,90 @@ def kategori_bmi_untuk_anak(bmi, usia, jenis_kelamin):
         else:
             return "Obesitas"
 
-# Fungsi untuk menghitung BMI
+# Function to calculate BMI
 def hitung_bmi(berat, tinggi):
     return berat / ((tinggi / 100) ** 2)
 
-# Fungsi untuk kembali ke halaman utama
+# Function to return to home page
 def go_home():
     st.session_state.page = "home"
 
-# Detect user system theme (dark or light mode)
-def get_user_theme():
-    theme = st.beta_set_page_config(page_title="BMI App", page_icon="📊", layout="wide", initial_sidebar_state="expanded")
-    return theme
+# Global Style (Background and Font)
+def set_background():
+    st.markdown(
+        """
+        <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .stButton button {
+            background-color: #3498db;
+            color: white;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .stButton button:hover {
+            background-color: #2980b9;
+        }
+        h1, h2, h3 {
+            text-align: center;
+            color: #333;
+        }
+        p, label {
+            color: inherit;
+        }
 
-# Gaya Global (Background dan Font)
-def set_background(theme="light"):
-    if theme == "dark":
-        st.markdown(
-            """
-            <style>
+        /* Background for light and dark modes */
+        @media (prefers-color-scheme: dark) {
             body {
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                background-color: #121212;
-                color: #f0f0f0;
+                background-color: #2c3e50;
+                color: #ecf0f1;
             }
             .stButton button {
-                background-color: #1F1F1F;
-                color: white;
-                border-radius: 10px;
-                padding: 10px 20px;
-                font-weight: bold;
-                box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
-                transition: background-color 0.3s ease;
+                background-color: #16a085;
             }
-            .stButton button:hover {
-                background-color: #333;
-            }
-            h1, h2, h3 {
-                text-align: center;
-                font-size: 2.5rem;
-                margin-bottom: 1rem;
-            }
-            .stMarkdown {
-                font-size: 1.1rem;
-                line-height: 1.6;
-            }
-
-            .stNumberInput input {
-                font-size: 1.1rem;
-                padding: 10px;
-            }
-
-            .stRadio {
-                font-size: 1.1rem;
-            }
-
-            .stProgressBar {
-                height: 30px;
-            }
-
-            .result-card {
-                background-color: rgba(33, 33, 33, 0.85);
-                border-radius: 15px;
-                padding: 20px;
-                margin: 20px auto;
-                max-width: 600px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            }
-
-            .result-card h4 {
-                font-size: 1.5rem;
-                text-align: center;
-            }
-            </style>
-            """,
-            unsafe_allow_html=True
-        )
-    else:  # light mode
-        st.markdown(
-            """
-            <style>
+        }
+        @media (prefers-color-scheme: light) {
             body {
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                background: linear-gradient(to right, #00c6ff, #0072ff);
-                color: #333;
+                background-color: #f5f5f5;
+                color: #2c3e50;
             }
-            .stButton button {
-                background-color: #2E86C1;
-                color: white;
-                border-radius: 10px;
-                padding: 10px 20px;
-                font-weight: bold;
-                box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
-                transition: background-color 0.3s ease;
-            }
-            .stButton button:hover {
-                background-color: #1B4F72;
-            }
-            h1, h2, h3 {
-                text-align: center;
-                font-size: 2.5rem;
-                margin-bottom: 1rem;
-            }
-            .stMarkdown {
-                font-size: 1.1rem;
-                line-height: 1.6;
-            }
+        }
 
-            .stNumberInput input {
-                font-size: 1.1rem;
-                padding: 10px;
-            }
+        /* Card-style containers */
+        .stCard {
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        /* Styled Progress Bar */
+        .stProgress>div {
+            border-radius: 5px;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
 
-            .stRadio {
-                font-size: 1.1rem;
-            }
-
-            .stProgressBar {
-                height: 30px;
-            }
-
-            .result-card {
-                background-color: rgba(255, 255, 255, 0.85);
-                border-radius: 15px;
-                padding: 20px;
-                margin: 20px auto;
-                max-width: 600px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            }
-
-            .result-card h4 {
-                font-size: 1.5rem;
-                text-align: center;
-            }
-            </style>
-            """,
-            unsafe_allow_html=True
-        )
-
-# Halaman Home
+# Home Page
 def home_page():
     st.markdown(
         """
+        <div class="stCard">
         <h1>
             Aplikasi Pengukur Body Mass Index (BMI)
         </h1>
-        <h3 style='color: #f0f0f0;'>
+        <h3 style='color: #7f8c8d;'>
             Solusi Praktis Untuk Pemantauan Kesehatan
         </h3>
+        </div>
         """,
         unsafe_allow_html=True
     )
@@ -209,6 +144,7 @@ def home_page():
 
     st.markdown(
         """
+        <div class="stCard">
         <h2>
              Kelompok 5 
         </h2>
@@ -220,8 +156,8 @@ def home_page():
             - Muthia Ammara Shafira (2350113) <br>
             - Zahid Nashrulloh Khoerudin (2350141) <br>
         </p>
-        """,
-        unsafe_allow_html=True
+        </div>
+        """
     )
 
     st.markdown("---")
@@ -234,13 +170,15 @@ def home_page():
         if st.button("Mulai Hitung BMI 🧮"):
             st.session_state.page = "kalkulator"
 
-# Halaman Penjelasan BMI
+# BMI Explanation Page
 def penjelasan_bmi():
     st.markdown(
         """
+        <div class="stCard">
         <h1>
             Penjelasan tentang BMI
         </h1>
+        </div>
         """,
         unsafe_allow_html=True
     )
@@ -278,16 +216,18 @@ def penjelasan_bmi():
     if st.button("Kembali ke Home 🏠"):
         go_home()
 
-# Kalkulator BMI
+# BMI Calculator Page
 def kalkulator_bmi():
     st.markdown(
         """
+        <div class="stCard">
         <h1>
             Aplikasi Pengukur Body Mass Index (BMI)
         </h1>
-        <h3 style='color: #f0f0f0;'>
+        <h3 style='color: #7f8c8d;'>
             Silakan masukkan data Anda untuk menghitung BMI.
         </h3>
+        </div>
         """,
         unsafe_allow_html=True
     )
@@ -311,14 +251,10 @@ def kalkulator_bmi():
             bmi = hitung_bmi(berat, tinggi)
             kategori = kategori_bmi_untuk_anak(bmi, usia, jenis_kelamin)
 
-            st.markdown(f"""
-            <div class="result-card">
-                <h4>🎯 Hasil Perhitungan</h4>
-                <p><strong>Berat Badan Ideal Anda:</strong> `{berat_ideal:.2f} kg`</p>
-                <p><strong>Indeks Massa Tubuh (BMI):</strong> `{bmi:.2f}`</p>
-                <p><strong>Kategori Berat Badan:</strong> `{kategori}`</p>
-            </div>
-            """, unsafe_allow_html=True)
+            st.markdown("### 🎯 Hasil Perhitungan")
+            st.markdown(f"**Berat Badan Ideal Anda:** `{berat_ideal:.2f} kg`")
+            st.markdown(f"**Indeks Massa Tubuh (BMI):** `{bmi:.2f}`")
+            st.markdown(f"**Kategori Berat Badan:** `{kategori}`")
 
             if kategori == "Kurus":
                 st.progress(0.25)
@@ -336,11 +272,7 @@ def kalkulator_bmi():
     if st.button("Kembali ke Home 🏠"):
         go_home()
 
-# Detect the theme (dark or light)
-user_theme = get_user_theme()
-
-# Apply theme-specific styles
-set_background(theme=user_theme)
+set_background()
 
 if st.session_state.page == "home":
     home_page()
