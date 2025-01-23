@@ -200,7 +200,7 @@ def kalkulator_bmi():
             Aplikasi Pengukur Body Mass Index (BMI)
         </h1>
         <h3 style='color: #5D6D7E;'>
-            Silakan masukkan data Anda untuk menghitung BMI.
+            Silakan masukkan data Anda untuk menghitung BMI
         </h3>
         """,
         unsafe_allow_html=True
