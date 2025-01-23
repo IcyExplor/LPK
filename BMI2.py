@@ -222,7 +222,7 @@ def kalkulator_bmi():
             if kategori == "Kurus":
                 st.progress(0.25)
                 st.warning("💡 Tips: Anda berada dalam kategori Kurus. Perhatikan asupan nutrisi dan konsultasikan dengan ahli gizi.")
-                elif kategori == "Normal":
+            elif kategori == "Normal":
                 st.progress(0.5)
                 st.success("🎉 Selamat! Anda berada dalam kategori Normal. Pertahankan gaya hidup sehat!")
             elif kategori == "Gemuk":
@@ -235,8 +235,10 @@ def kalkulator_bmi():
     if st.button("Kembali ke Home 🏠"):
         go_home()
 
+# Set Global Background
 set_background()
 
+# Main App Logic
 if st.session_state.page == "home":
     home_page()
 elif st.session_state.page == "penjelasan":
