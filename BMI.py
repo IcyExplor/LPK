@@ -11,16 +11,37 @@ def hitung_berat_badan_ideal(tinggi, jenis_kelamin):
     else:
         return 0.85 * (tinggi - 100)
 
-# Fungsi untuk menentukan kategori BMI
-def kategori_bmi(bmi):
-    if bmi < 18.5:
-        return "Kurus"
-    elif 18.5 <= bmi < 24.9:
-        return "Normal"
-    elif 25 <= bmi < 29.9:
-        return "Gemuk"
-    else:
-        return "Obesitas"
+# Fungsi untuk menentukan kategori BMI berdasarkan usia dan jenis kelamin (untuk anak-anak)
+def kategori_bmi_untuk_anak(bmi, usia, jenis_kelamin):
+    if usia < 18:  # Hanya untuk anak-anak dan remaja
+        # Tabel persentil WHO untuk anak berdasarkan usia dan jenis kelamin
+        if jenis_kelamin == 'Pria':
+            if bmi < 14.5:
+                return "Kurus"
+            elif 14.5 <= bmi < 18.5:
+                return "Normal"
+            elif 18.5 <= bmi < 21.5:
+                return "Gemuk"
+            else:
+                return "Obesitas"
+        else:  # Wanita
+            if bmi < 14.0:
+                return "Kurus"
+            elif 14.0 <= bmi < 18.0:
+                return "Normal"
+            elif 18.0 <= bmi < 21.0:
+                return "Gemuk"
+            else:
+                return "Obesitas"
+    else:  # Untuk dewasa dan lansia
+        if bmi < 18.5:
+            return "Kurus"
+        elif 18.5 <= bmi < 24.9:
+            return "Normal"
+        elif 25 <= bmi < 29.9:
+            return "Gemuk"
+        else:
+            return "Obesitas"
 
 # Fungsi untuk menghitung BMI
 def hitung_bmi(berat, tinggi):
@@ -36,10 +57,6 @@ def set_background():
         """
         <style>
         body {
-            background-image: url('https://e1.pxfuel.com/desktop-wallpaper/398/252/desktop-wallpaper-black-backgrounds-better-for-eyes-black-plain.jpg');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
             font-family: Arial, sans-serif;
         }
         .stButton button {
@@ -53,10 +70,25 @@ def set_background():
             background-color: #1B4F72;
         }
         h1, h2, h3 {
-            color: white;
+            text-align: center;
         }
         p, label {
-            color: #FDFEFE;
+            color: inherit;
+        }
+
+        /* Latar belakang adaptif berdasarkan mode gelap atau terang */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #1E1E1E;
+                color: #FFFFFF;
+            }
+        }
+
+        @media (prefers-color-scheme: light) {
+            body {
+                background-color: #FDFDFD;
+                color: #000000;
+            }
         }
         </style>
         """,
@@ -67,10 +99,10 @@ def set_background():
 def home_page():
     st.markdown(
         """
-        <h1 style='text-align: center;'>
+        <h1>
             Aplikasi Pengukur Body Mass Index (BMI)
         </h1>
-        <h3 style='text-align: center; color: #5D6D7E;'>
+        <h3 style='color: #5D6D7E;'>
             Solusi Praktis Untuk Pemantauan Kesehatan
         </h3>
         """,
@@ -81,9 +113,7 @@ def home_page():
     st.markdown(
         f"""
         <div style="text-align: center;">
-            <img src="{image_url}" style="width: 100%; max-width: 600px; border-radius: 15px; transition: transform 0.3s ease;" 
-                 onmouseover="this.style.transform='scale(1.05)'" 
-                 onmouseout="this.style.transform='scale(1)'">
+            <img src="{image_url}" style="width: 100%; max-width: 600px; border-radius: 15px;">
         </div>
         """,
         unsafe_allow_html=True
@@ -93,10 +123,10 @@ def home_page():
 
     st.markdown(
         """
-        <h2 style='text-align: center;'>
+        <h2>
              Kelompok 5 
         </h2>
-        <p style='text-align: Left;'>
+        <p>
             Anggota: <br>
             - Dwinta Syafa Salsabilla (2350086) <br>
             - Fasya Anindya Zahrani (2350089) <br>
@@ -122,14 +152,13 @@ def home_page():
 def penjelasan_bmi():
     st.markdown(
         """
-        <h1 style='text-align: center;'>
+        <h1>
             Penjelasan tentang BMI
         </h1>
         """,
         unsafe_allow_html=True
     )
 
-    # Garis Pemisah
     st.markdown("---")
 
     st.markdown(
@@ -158,7 +187,6 @@ def penjelasan_bmi():
         """
     )
 
-    # Garis pemisah
     st.markdown("---")
 
     if st.button("Kembali ke Home 🏠"):
@@ -168,45 +196,40 @@ def penjelasan_bmi():
 def kalkulator_bmi():
     st.markdown(
         """
-        <h1 style='text-align: center;'>
+        <h1>
             Aplikasi Pengukur Body Mass Index (BMI)
         </h1>
-        <h3 style='text-align: center; color: #5D6D7E;'>
+        <h3 style='color: #5D6D7E;'>
             Silakan masukkan data Anda untuk menghitung BMI.
         </h3>
         """,
         unsafe_allow_html=True
     )
 
-    # Garis Pemisah
     st.markdown("---")
 
-    # Input fields dengan validasi
     col1, col2 = st.columns(2)
     with col1:
         tinggi = st.number_input("Masukkan tinggi badan Anda (cm):", min_value=0.0, format="%.2f", key="tinggi")
     with col2:
         berat = st.number_input("Masukkan berat badan Anda (kg):", min_value=0.0, format="%.2f", key="berat")
 
+    usia = st.number_input("Masukkan usia Anda (tahun):", min_value=0, format="%d", key="usia")
     jenis_kelamin = st.radio("Masukkan jenis kelamin Anda:", ('Pria', 'Wanita'), key="jenis_kelamin")
 
-    # Tombol untuk menghitung BMI
     if st.button("Hitung BMI 🧮", key="hitung_bmi_button"):
-        if tinggi <= 0 or berat <= 0:
-            st.error("Tinggi dan berat badan harus lebih dari 0.")
+        if tinggi <= 0 or berat <= 0 or usia <= 0:
+            st.error("Tinggi, berat badan, dan usia harus lebih dari 0.")
         else:
-            # Hitung berat ideal, BMI, dan kategori
             berat_ideal = hitung_berat_badan_ideal(tinggi, jenis_kelamin)
             bmi = hitung_bmi(berat, tinggi)
-            kategori = kategori_bmi(bmi)
+            kategori = kategori_bmi_untuk_anak(bmi, usia, jenis_kelamin)
 
-            # Tampilkan hasil dengan styling menarik
             st.markdown("### 🎯 Hasil Perhitungan")
             st.markdown(f"**Berat Badan Ideal Anda:** `{berat_ideal:.2f} kg`")
             st.markdown(f"**Indeks Massa Tubuh (BMI):** `{bmi:.2f}`")
             st.markdown(f"**Kategori Berat Badan:** `{kategori}`")
 
-            # Visualisasi kategori BMI dengan progress bar
             if kategori == "Kurus":
                 st.progress(0.25)
                 st.warning("💡 Tips: Anda berada dalam kategori Kurus. Perhatikan asupan nutrisi dan konsultasikan dengan ahli gizi.")
@@ -223,10 +246,8 @@ def kalkulator_bmi():
     if st.button("Kembali ke Home 🏠"):
         go_home()
 
-# Set Global Background
 set_background()
 
-# Main App Logic
 if st.session_state.page == "home":
     home_page()
 elif st.session_state.page == "penjelasan":
