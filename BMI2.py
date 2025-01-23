@@ -95,6 +95,103 @@ def set_background():
         unsafe_allow_html=True
     )
 
+# Halaman Home
+def home_page():
+    st.markdown(
+        """
+        <h1>
+            Aplikasi Pengukur Body Mass Index (BMI)
+        </h1>
+        <h3 style='color: #5D6D7E;'>
+            Solusi Praktis Untuk Pemantauan Kesehatan
+        </h3>
+        """,
+        unsafe_allow_html=True
+    )
+
+    image_url = "https://static.vecteezy.com/system/resources/previews/016/828/833/original/bmi-classification-chart-measurement-woman-colorful-infographic-with-ruler-female-body-mass-index-scale-collection-from-underweight-to-overweight-fit-person-different-weight-level-eps-vector.jpg"
+    st.markdown(
+        f"""
+        <div style="text-align: center;">
+            <img src="{image_url}" style="width: 100%; max-width: 600px; border-radius: 15px;">
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.markdown("---")
+
+    st.markdown(
+        """
+        <h2>
+             Kelompok 5 
+        </h2>
+        <p>
+            Anggota: <br>
+            - Dwinta Syafa Salsabilla (2350086) <br>
+            - Fasya Anindya Zahrani (2350089) <br>
+            - Ilman Hakim Muhardian (2350099) <br>
+            - Muthia Ammara Shafira (2350113) <br>
+            - Zahid Nashrulloh Khoerudin (2350141) <br>
+        </p>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.markdown("---")
+
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("Penjelasan tentang BMI 📘"):
+            st.session_state.page = "penjelasan"
+    with col2:
+        if st.button("Mulai Hitung BMI 🧮"):
+            st.session_state.page = "kalkulator"
+
+# Halaman Penjelasan BMI
+def penjelasan_bmi():
+    st.markdown(
+        """
+        <h1>
+            Penjelasan tentang BMI
+        </h1>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.markdown("---")
+
+    st.markdown(
+        """
+        ### Apa itu BMI?
+        **BMI (Body Mass Index)** atau Indeks Massa Tubuh adalah ukuran yang digunakan untuk menilai apakah berat badan seseorang 
+        sesuai dengan tinggi badannya. BMI dihitung dengan membagi berat badan (dalam kilogram) dengan kuadrat tinggi badan 
+        (dalam meter).
+
+        ### Kategori BMI:
+        - **Kurus**: BMI < 18.5
+        - **Normal**: 18.5 ≤ BMI < 24.9
+        - **Gemuk**: 25 ≤ BMI < 29.9
+        - **Obesitas**: BMI ≥ 30
+
+        ### Mengapa BMI Penting?
+        BMI membantu Anda memahami apakah berat badan Anda berada dalam kisaran yang sehat. Namun, perlu diingat bahwa BMI 
+        tidak memperhitungkan komposisi tubuh (seperti massa otot vs lemak), sehingga hasilnya mungkin tidak selalu akurat 
+        untuk semua orang, terutama atlet atau orang dengan massa otot tinggi.
+
+        ### Tips untuk Menjaga BMI Sehat:
+        1. Konsumsi makanan bergizi seimbang.
+        2. Rutin berolahraga.
+        3. Hindari kebiasaan tidak sehat seperti merokok atau konsumsi alkohol berlebihan.
+        4. Periksa kesehatan secara berkala.
+        """
+    )
+
+    st.markdown("---")
+
+    if st.button("Kembali ke Home 🏠"):
+        go_home()
+
 # Kalkulator BMI
 def kalkulator_bmi():
     st.markdown(
