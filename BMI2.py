@@ -193,12 +193,11 @@ def kalkulator_bmi():
     with col2:
         berat = st.number_input("Masukkan berat badan Anda (kg):", min_value=0.0, format="%.2f", key="berat")
 
-    usia = st.number_input("Masukkan usia Anda (tahun):", min_value=0, max_value=150, step=1, key="usia")
     jenis_kelamin = st.radio("Masukkan jenis kelamin Anda:", ('Pria', 'Wanita'), key="jenis_kelamin")
 
     if st.button("Hitung BMI 🧮", key="hitung_bmi_button"):
-        if tinggi <= 0 or berat <= 0 or usia <= 0:
-            st.error("Tinggi, berat badan, dan usia harus lebih dari 0.")
+        if tinggi <= 0 or berat <= 0:
+            st.error("Tinggi dan berat badan harus lebih dari 0.")
         else:
             berat_ideal = hitung_berat_badan_ideal(tinggi, jenis_kelamin)
             bmi = hitung_bmi(berat, tinggi)
@@ -221,16 +220,6 @@ def kalkulator_bmi():
             else:
                 st.progress(1.0)
                 st.error("⚠️ Perhatian: Anda berada dalam kategori Obesitas. Segera konsultasikan dengan dokter atau ahli gizi.")
-
-            # Memberikan saran berdasarkan usia
-            if usia < 18:
-                st.info("💡 Sebagai remaja, penting untuk memiliki pola makan yang sehat dan seimbang. Pastikan Anda mendapatkan cukup nutrisi untuk tumbuh dengan baik.")
-            elif 18 <= usia < 35:
-                st.info("💡 Usia dewasa muda adalah waktu yang baik untuk membangun kebiasaan sehat. Pertahankan gaya hidup aktif dan makan makanan bergizi.")
-            elif 35 <= usia < 50:
-                st.info("💡 Pada usia ini, penting untuk lebih memperhatikan kesehatan jantung dan metabolisme. Lakukan olahraga teratur dan makan dengan bijak.")
-            else:
-                st.info("💡 Di usia ini, menjaga berat badan yang sehat sangat penting untuk mengurangi risiko penyakit kronis. Perhatikan pola makan dan aktivitas fisik Anda.")
 
     if st.button("Kembali ke Home 🏠"):
         go_home()
