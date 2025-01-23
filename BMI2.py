@@ -1,6 +1,6 @@
 import streamlit as st
 
-# Inisialisasi session state untuk navigasi halaman
+# Inisialisasi session state untuk mengontrol tampilan
 if "page" not in st.session_state:
     st.session_state.page = "home"
 
@@ -26,17 +26,6 @@ def kategori_bmi(bmi):
 def hitung_bmi(berat, tinggi):
     return berat / ((tinggi / 100) ** 2)
 
-# Fungsi untuk menyesuaikan BMI berdasarkan usia
-def sesuaikan_bmi_berdasarkan_usia(bmi, usia):
-    if usia < 18:
-        return bmi * 0.9  # Penyesuaian untuk remaja
-    elif usia <= 30:
-        return bmi * 1.0  # Usia dewasa muda (tidak ada perubahan)
-    elif usia <= 50:
-        return bmi * 1.1  # Penyesuaian untuk usia dewasa
-    else:
-        return bmi * 1.2  # Penyesuaian untuk lansia
-
 # Fungsi untuk kembali ke halaman utama
 def go_home():
     st.session_state.page = "home"
@@ -47,10 +36,6 @@ def set_background():
         """
         <style>
         body {
-            background-image: url('https://www.teahub.io/photos/full/8-85399_abstract-minimalist-background-hd.jpg');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
             font-family: Arial, sans-serif;
         }
         .stButton button {
@@ -64,10 +49,25 @@ def set_background():
             background-color: #1B4F72;
         }
         h1, h2, h3 {
-            color: white;
+            text-align: center;
         }
         p, label {
-            color: #FDFEFE;
+            color: inherit;
+        }
+
+        /* Latar belakang adaptif berdasarkan mode gelap atau terang */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #1E1E1E;
+                color: #FFFFFF;
+            }
+        }
+
+        @media (prefers-color-scheme: light) {
+            body {
+                background-color: #FDFDFD;
+                color: #000000;
+            }
         }
         </style>
         """,
@@ -78,8 +78,41 @@ def set_background():
 def home_page():
     st.markdown(
         """
-        <h1 style='text-align: center;'>Aplikasi Pengukur Body Mass Index (BMI)</h1>
-        <h3 style='text-align: center; color: #5D6D7E;'>Solusi Praktis Untuk Pemantauan Kesehatan</h3>
+        <h1>
+            Aplikasi Pengukur Body Mass Index (BMI)
+        </h1>
+        <h3 style='color: #5D6D7E;'>
+            Solusi Praktis Untuk Pemantauan Kesehatan
+        </h3>
+        """,
+        unsafe_allow_html=True
+    )
+
+    image_url = "https://static.vecteezy.com/system/resources/previews/016/828/833/original/bmi-classification-chart-measurement-woman-colorful-infographic-with-ruler-female-body-mass-index-scale-collection-from-underweight-to-overweight-fit-person-different-weight-level-eps-vector.jpg"
+    st.markdown(
+        f"""
+        <div style="text-align: center;">
+            <img src="{image_url}" style="width: 100%; max-width: 600px; border-radius: 15px;">
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.markdown("---")
+
+    st.markdown(
+        """
+        <h2>
+             Kelompok 5 
+        </h2>
+        <p>
+            Anggota: <br>
+            - Dwinta Syafa Salsabilla (2350086) <br>
+            - Fasya Anindya Zahrani (2350089) <br>
+            - Ilman Hakim Muhardian (2350099) <br>
+            - Muthia Ammara Shafira (2350113) <br>
+            - Zahid Nashrulloh Khoerudin (2350141) <br>
+        </p>
         """,
         unsafe_allow_html=True
     )
@@ -96,80 +129,103 @@ def home_page():
 
 # Halaman Penjelasan BMI
 def penjelasan_bmi():
-    st.markdown("<h1 style='text-align: center;'>Penjelasan tentang BMI</h1>", unsafe_allow_html=True)
+    st.markdown(
+        """
+        <h1>
+            Penjelasan tentang BMI
+        </h1>
+        """,
+        unsafe_allow_html=True
+    )
+
     st.markdown("---")
+
     st.markdown(
         """
         ### Apa itu BMI?
-        **BMI (Body Mass Index)** adalah ukuran untuk menilai apakah berat badan Anda sesuai dengan tinggi badan Anda. 
-        BMI dihitung dengan membagi berat badan (kg) dengan kuadrat tinggi badan (m).
+        **BMI (Body Mass Index)** atau Indeks Massa Tubuh adalah ukuran yang digunakan untuk menilai apakah berat badan seseorang 
+        sesuai dengan tinggi badannya. BMI dihitung dengan membagi berat badan (dalam kilogram) dengan kuadrat tinggi badan 
+        (dalam meter).
 
-        ### Pengaruh Usia pada BMI
-        Dengan bertambahnya usia, komposisi tubuh berubah. Penyesuaian BMI berdasarkan usia memastikan hasil yang lebih relevan.
-
-        ### Kategori BMI
+        ### Kategori BMI:
         - **Kurus**: BMI < 18.5
         - **Normal**: 18.5 ≤ BMI < 24.9
         - **Gemuk**: 25 ≤ BMI < 29.9
         - **Obesitas**: BMI ≥ 30
+
+        ### Mengapa BMI Penting?
+        BMI membantu Anda memahami apakah berat badan Anda berada dalam kisaran yang sehat. Namun, perlu diingat bahwa BMI 
+        tidak memperhitungkan komposisi tubuh (seperti massa otot vs lemak), sehingga hasilnya mungkin tidak selalu akurat 
+        untuk semua orang, terutama atlet atau orang dengan massa otot tinggi.
+
+        ### Tips untuk Menjaga BMI Sehat:
+        1. Konsumsi makanan bergizi seimbang.
+        2. Rutin berolahraga.
+        3. Hindari kebiasaan tidak sehat seperti merokok atau konsumsi alkohol berlebihan.
+        4. Periksa kesehatan secara berkala.
         """
     )
+
     st.markdown("---")
+
     if st.button("Kembali ke Home 🏠"):
         go_home()
 
 # Kalkulator BMI
 def kalkulator_bmi():
-    st.markdown("<h1 style='text-align: center;'>Kalkulator BMI dengan Penyesuaian Usia</h1>", unsafe_allow_html=True)
+    st.markdown(
+        """
+        <h1>
+            Aplikasi Pengukur Body Mass Index (BMI)
+        </h1>
+        <h3 style='color: #5D6D7E;'>
+            Silakan masukkan data Anda untuk menghitung BMI.
+        </h3>
+        """,
+        unsafe_allow_html=True
+    )
+
     st.markdown("---")
 
     col1, col2 = st.columns(2)
     with col1:
-        tinggi = st.number_input("Masukkan tinggi badan Anda (cm):", min_value=1.0, format="%.2f", key="tinggi")
+        tinggi = st.number_input("Masukkan tinggi badan Anda (cm):", min_value=0.0, format="%.2f", key="tinggi")
     with col2:
-        berat = st.number_input("Masukkan berat badan Anda (kg):", min_value=1.0, format="%.2f", key="berat")
+        berat = st.number_input("Masukkan berat badan Anda (kg):", min_value=0.0, format="%.2f", key="berat")
 
-    jenis_kelamin = st.radio("Pilih jenis kelamin Anda:", ('Pria', 'Wanita'), key="jenis_kelamin")
-    usia = st.number_input("Masukkan usia Anda (tahun):", min_value=1, format="%d", key="usia")
+    jenis_kelamin = st.radio("Masukkan jenis kelamin Anda:", ('Pria', 'Wanita'), key="jenis_kelamin")
 
-    if st.button("Hitung BMI 🧮"):
-        if tinggi <= 0 or berat <= 0 or usia <= 0:
-            st.error("Masukkan data yang valid!")
+    if st.button("Hitung BMI 🧮", key="hitung_bmi_button"):
+        if tinggi <= 0 or berat <= 0:
+            st.error("Tinggi dan berat badan harus lebih dari 0.")
         else:
-            # Hitung berat ideal, BMI, dan penyesuaian
             berat_ideal = hitung_berat_badan_ideal(tinggi, jenis_kelamin)
             bmi = hitung_bmi(berat, tinggi)
-            bmi_disesuaikan = sesuaikan_bmi_berdasarkan_usia(bmi, usia)
-            kategori = kategori_bmi(bmi_disesuaikan)
+            kategori = kategori_bmi(bmi)
 
-            # Tampilkan hasil
             st.markdown("### 🎯 Hasil Perhitungan")
             st.markdown(f"**Berat Badan Ideal Anda:** `{berat_ideal:.2f} kg`")
-            st.markdown(f"**BMI Anda:** `{bmi:.2f}`")
-            st.markdown(f"**BMI Setelah Penyesuaian Usia:** `{bmi_disesuaikan:.2f}`")
-            st.markdown(f"**Kategori Berat Badan Anda:** `{kategori}`")
+            st.markdown(f"**Indeks Massa Tubuh (BMI):** `{bmi:.2f}`")
+            st.markdown(f"**Kategori Berat Badan:** `{kategori}`")
 
-            # Progress bar sesuai kategori BMI
             if kategori == "Kurus":
                 st.progress(0.25)
-                st.warning("Anda dalam kategori Kurus. Konsultasikan dengan ahli gizi.")
+                st.warning("💡 Tips: Anda berada dalam kategori Kurus. Perhatikan asupan nutrisi dan konsultasikan dengan ahli gizi.")
             elif kategori == "Normal":
                 st.progress(0.5)
-                st.success("Selamat! Anda berada dalam kategori Normal.")
+                st.success("🎉 Selamat! Anda berada dalam kategori Normal. Pertahankan gaya hidup sehat!")
             elif kategori == "Gemuk":
                 st.progress(0.75)
-                st.warning("Anda dalam kategori Gemuk. Perhatikan pola hidup sehat.")
+                st.warning("💡 Tips: Anda berada dalam kategori Gemuk. Mulailah pola hidup sehat dan olahraga teratur.")
             else:
                 st.progress(1.0)
-                st.error("Anda dalam kategori Obesitas. Segera konsultasikan dengan ahli kesehatan.")
+                st.error("⚠️ Perhatian: Anda berada dalam kategori Obesitas. Segera konsultasikan dengan dokter atau ahli gizi.")
 
     if st.button("Kembali ke Home 🏠"):
         go_home()
 
-# Set Global Background
 set_background()
 
-# Main App Logic
 if st.session_state.page == "home":
     home_page()
 elif st.session_state.page == "penjelasan":
