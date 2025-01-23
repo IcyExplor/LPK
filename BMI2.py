@@ -51,68 +51,135 @@ def hitung_bmi(berat, tinggi):
 def go_home():
     st.session_state.page = "home"
 
+# Detect user system theme (dark or light mode)
+def get_user_theme():
+    theme = st.beta_set_page_config(page_title="BMI App", page_icon="📊", layout="wide", initial_sidebar_state="expanded")
+    return theme
+
 # Gaya Global (Background dan Font)
-def set_background():
-    st.markdown(
-        """
-        <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(to right, #00c6ff, #0072ff);
-            color: #333;
-        }
-        .stButton button {
-            background-color: #2E86C1;
-            color: white;
-            border-radius: 10px;
-            padding: 10px 20px;
-            font-weight: bold;
-            box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
-            transition: background-color 0.3s ease;
-        }
-        .stButton button:hover {
-            background-color: #1B4F72;
-        }
-        h1, h2, h3 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-        .stMarkdown {
-            font-size: 1.1rem;
-            line-height: 1.6;
-        }
+def set_background(theme="light"):
+    if theme == "dark":
+        st.markdown(
+            """
+            <style>
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background-color: #121212;
+                color: #f0f0f0;
+            }
+            .stButton button {
+                background-color: #1F1F1F;
+                color: white;
+                border-radius: 10px;
+                padding: 10px 20px;
+                font-weight: bold;
+                box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
+                transition: background-color 0.3s ease;
+            }
+            .stButton button:hover {
+                background-color: #333;
+            }
+            h1, h2, h3 {
+                text-align: center;
+                font-size: 2.5rem;
+                margin-bottom: 1rem;
+            }
+            .stMarkdown {
+                font-size: 1.1rem;
+                line-height: 1.6;
+            }
 
-        .stNumberInput input {
-            font-size: 1.1rem;
-            padding: 10px;
-        }
-        
-        .stRadio {
-            font-size: 1.1rem;
-        }
+            .stNumberInput input {
+                font-size: 1.1rem;
+                padding: 10px;
+            }
 
-        .stProgressBar {
-            height: 30px;
-        }
+            .stRadio {
+                font-size: 1.1rem;
+            }
 
-        .result-card {
-            background-color: rgba(255, 255, 255, 0.85);
-            border-radius: 15px;
-            padding: 20px;
-            margin: 20px auto;
-            max-width: 600px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
+            .stProgressBar {
+                height: 30px;
+            }
 
-        .result-card h4 {
-            font-size: 1.5rem;
-            text-align: center;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
+            .result-card {
+                background-color: rgba(33, 33, 33, 0.85);
+                border-radius: 15px;
+                padding: 20px;
+                margin: 20px auto;
+                max-width: 600px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            }
+
+            .result-card h4 {
+                font-size: 1.5rem;
+                text-align: center;
+            }
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
+    else:  # light mode
+        st.markdown(
+            """
+            <style>
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(to right, #00c6ff, #0072ff);
+                color: #333;
+            }
+            .stButton button {
+                background-color: #2E86C1;
+                color: white;
+                border-radius: 10px;
+                padding: 10px 20px;
+                font-weight: bold;
+                box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
+                transition: background-color 0.3s ease;
+            }
+            .stButton button:hover {
+                background-color: #1B4F72;
+            }
+            h1, h2, h3 {
+                text-align: center;
+                font-size: 2.5rem;
+                margin-bottom: 1rem;
+            }
+            .stMarkdown {
+                font-size: 1.1rem;
+                line-height: 1.6;
+            }
+
+            .stNumberInput input {
+                font-size: 1.1rem;
+                padding: 10px;
+            }
+
+            .stRadio {
+                font-size: 1.1rem;
+            }
+
+            .stProgressBar {
+                height: 30px;
+            }
+
+            .result-card {
+                background-color: rgba(255, 255, 255, 0.85);
+                border-radius: 15px;
+                padding: 20px;
+                margin: 20px auto;
+                max-width: 600px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            }
+
+            .result-card h4 {
+                font-size: 1.5rem;
+                text-align: center;
+            }
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
 
 # Halaman Home
 def home_page():
@@ -269,7 +336,11 @@ def kalkulator_bmi():
     if st.button("Kembali ke Home 🏠"):
         go_home()
 
-set_background()
+# Detect the theme (dark or light)
+user_theme = get_user_theme()
+
+# Apply theme-specific styles
+set_background(theme=user_theme)
 
 if st.session_state.page == "home":
     home_page()
