@@ -57,38 +57,57 @@ def set_background():
         """
         <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            color: #333;
         }
         .stButton button {
             background-color: #2E86C1;
             color: white;
-            border-radius: 5px;
-            padding: 8px 15px;
+            border-radius: 10px;
+            padding: 10px 20px;
             font-weight: bold;
+            box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
+            transition: background-color 0.3s ease;
         }
         .stButton button:hover {
             background-color: #1B4F72;
         }
         h1, h2, h3 {
             text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
         }
-        p, label {
-            color: inherit;
-        }
-
-        /* Latar belakang adaptif berdasarkan mode gelap atau terang */
-        @media (prefers-color-scheme: dark) {
-            body {
-                background-color: #1E1E1E;
-                color: #FFFFFF;
-            }
+        .stMarkdown {
+            font-size: 1.1rem;
+            line-height: 1.6;
         }
 
-        @media (prefers-color-scheme: light) {
-            body {
-                background-color: #FDFDFD;
-                color: #000000;
-            }
+        .stNumberInput input {
+            font-size: 1.1rem;
+            padding: 10px;
+        }
+        
+        .stRadio {
+            font-size: 1.1rem;
+        }
+
+        .stProgressBar {
+            height: 30px;
+        }
+
+        .result-card {
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 600px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .result-card h4 {
+            font-size: 1.5rem;
+            text-align: center;
         }
         </style>
         """,
@@ -102,7 +121,7 @@ def home_page():
         <h1>
             Aplikasi Pengukur Body Mass Index (BMI)
         </h1>
-        <h3 style='color: #5D6D7E;'>
+        <h3 style='color: #f0f0f0;'>
             Solusi Praktis Untuk Pemantauan Kesehatan
         </h3>
         """,
@@ -199,7 +218,7 @@ def kalkulator_bmi():
         <h1>
             Aplikasi Pengukur Body Mass Index (BMI)
         </h1>
-        <h3 style='color: #5D6D7E;'>
+        <h3 style='color: #f0f0f0;'>
             Silakan masukkan data Anda untuk menghitung BMI.
         </h3>
         """,
@@ -225,10 +244,14 @@ def kalkulator_bmi():
             bmi = hitung_bmi(berat, tinggi)
             kategori = kategori_bmi_untuk_anak(bmi, usia, jenis_kelamin)
 
-            st.markdown("### 🎯 Hasil Perhitungan")
-            st.markdown(f"**Berat Badan Ideal Anda:** `{berat_ideal:.2f} kg`")
-            st.markdown(f"**Indeks Massa Tubuh (BMI):** `{bmi:.2f}`")
-            st.markdown(f"**Kategori Berat Badan:** `{kategori}`")
+            st.markdown(f"""
+            <div class="result-card">
+                <h4>🎯 Hasil Perhitungan</h4>
+                <p><strong>Berat Badan Ideal Anda:</strong> `{berat_ideal:.2f} kg`</p>
+                <p><strong>Indeks Massa Tubuh (BMI):</strong> `{bmi:.2f}`</p>
+                <p><strong>Kategori Berat Badan:</strong> `{kategori}`</p>
+            </div>
+            """, unsafe_allow_html=True)
 
             if kategori == "Kurus":
                 st.progress(0.25)
