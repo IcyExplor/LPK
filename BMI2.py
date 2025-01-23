@@ -12,25 +12,15 @@ def hitung_berat_badan_ideal(tinggi, jenis_kelamin):
         return 0.85 * (tinggi - 100)
 
 # Fungsi untuk menentukan kategori BMI
-def kategori_bmi(bmi, usia):
-    if usia < 18:
-        if bmi < 18.5:
-            return "Kurus"
-        elif 18.5 <= bmi < 24.9:
-            return "Normal"
-        elif 25 <= bmi < 29.9:
-            return "Gemuk"
-        else:
-            return "Obesitas"
+def kategori_bmi(bmi):
+    if bmi < 18.5:
+        return "Kurus"
+    elif 18.5 <= bmi < 24.9:
+        return "Normal"
+    elif 25 <= bmi < 29.9:
+        return "Gemuk"
     else:
-        if bmi < 18.5:
-            return "Kurus"
-        elif 18.5 <= bmi < 24.9:
-            return "Normal"
-        elif 25 <= bmi < 29.9:
-            return "Gemuk"
-        else:
-            return "Obesitas"
+        return "Obesitas"
 
 # Fungsi untuk menghitung BMI
 def hitung_bmi(berat, tinggi):
@@ -203,7 +193,6 @@ def kalkulator_bmi():
     with col2:
         berat = st.number_input("Masukkan berat badan Anda (kg):", min_value=0.0, format="%.2f", key="berat")
 
-    usia = st.number_input("Masukkan usia Anda (tahun):", min_value=0, max_value=120, key="usia")
     jenis_kelamin = st.radio("Masukkan jenis kelamin Anda:", ('Pria', 'Wanita'), key="jenis_kelamin")
 
     if st.button("Hitung BMI 🧮", key="hitung_bmi_button"):
@@ -212,7 +201,7 @@ def kalkulator_bmi():
         else:
             berat_ideal = hitung_berat_badan_ideal(tinggi, jenis_kelamin)
             bmi = hitung_bmi(berat, tinggi)
-            kategori = kategori_bmi(bmi, usia)
+            kategori = kategori_bmi(bmi)
 
             st.markdown("### 🎯 Hasil Perhitungan")
             st.markdown(f"**Berat Badan Ideal Anda:** `{berat_ideal:.2f} kg`")
@@ -235,10 +224,8 @@ def kalkulator_bmi():
     if st.button("Kembali ke Home 🏠"):
         go_home()
 
-# Set Global Background
 set_background()
 
-# Main App Logic
 if st.session_state.page == "home":
     home_page()
 elif st.session_state.page == "penjelasan":
