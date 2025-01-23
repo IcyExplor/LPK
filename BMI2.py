@@ -191,46 +191,76 @@ def kalkulator_bmi():
     jenis_kelamin = st.radio("Masukkan jenis kelamin Anda:", ('Pria', 'Wanita'), key="jenis_kelamin")
     usia = st.number_input("Masukkan usia Anda (tahun):", min_value=0, format="%d", key="usia")
 
-    # Tombol untuk menghitung BMI
-    if st.button("Hitung BMI 🧮", key="hitung_bmi_button"):
-        if tinggi <= 0 or berat <= 0 or usia <= 0:
-            st.error("Tinggi, berat badan, dan usia harus lebih dari 0.")
+# Fungsi untuk menghitung berat badan ideal
+def hitung_berat_badan_ideal(tinggi, jenis_kelamin):
+    if jenis_kelamin == "Laki-laki":
+        return (tinggi - 100) - ((tinggi - 150) / 4)
+    elif jenis_kelamin == "Perempuan":
+        return (tinggi - 100) - ((tinggi - 150) / 2.5)
+
+# Fungsi untuk menghitung BMI
+def hitung_bmi(berat, tinggi):
+    return berat / (tinggi / 100) ** 2
+
+# Fungsi untuk menentukan kategori BMI
+def kategori_bmi(bmi):
+    if bmi < 18.5:
+        return "Kurus"
+    elif bmi < 25:
+        return "Normal"
+    elif bmi < 30:
+        return "Gemuk"
+    else:
+        return "Obesitas"
+
+# Fungsi untuk menghitung BMI berdasarkan usia
+def hitung_bmi_usia(bmi, usia):
+    if usia < 18:
+        return bmi * 0.9
+    elif usia < 30:
+        return bmi * 1.0
+    elif usia < 50:
+        return bmi * 1.1
+    else:
+        return bmi * 1.2
+
+# Tombol untuk menghitung BMI
+if st.button("Hitung BMI ", key="hitung_bmi_button"):
+    tinggi = st.session_state.tinggi
+    berat = st.session_state.berat
+    usia = st.session_state.usia
+    jenis_kelamin = st.session_state.jenis_kelamin
+    if tinggi <= 0 or berat <= 0 or usia <= 0:
+        st.error("Tinggi, berat badan, dan usia harus lebih dari 0.")
+    else:
+        # Hitung berat ideal, BMI, dan kategori
+        berat_ideal = hitung_berat_badan_ideal(tinggi, jenis_kelamin)
+        bmi = hitung_bmi(berat, tinggi)
+        kategori = kategori_bmi(bmi)
+
+        # Hitung BMI berdasarkan usia
+        bmi_usia = hitung_bmi_usia(bmi, usia)
+
+        # Tampilkan hasil dengan styling menarik
+        st.markdown("### Hasil Perhitungan")
+        st.markdown(f"**Berat Badan Ideal Anda:** `{berat_ideal:.2f} kg`")
+        st.markdown(f"**Indeks Massa Tubuh (BMI):** `{bmi:.2f}`")
+        st.markdown(f"**BMI Berdasarkan Usia:** `{bmi_usia:.2f}`")
+        st.markdown(f"**Kategori Berat Badan:** `{kategori}`")
+
+        # Visualisasi kategori BMI dengan progress bar
+        if kategori == "Kurus":
+            st.progress(0.25)
+            st.warning("Tips: Anda berada dalam kategori Kurus. Perhatikan asupan nutrisi dan konsultasikan dengan ahli gizi.")
+        elif kategori == "Normal":
+            st.progress(0.5)
+            st.success("Selamat! Anda berada dalam kategori Normal. Pertahankan gaya hidup sehat!")
+        elif kategori == "Gemuk":
+            st.progress(0.75)
+            st.warning("Tips: Anda berada dalam kategori Gemuk. Mulailah pola hidup sehat dan olahraga teratur.")
         else:
-            # Hitung berat ideal, BMI, dan kategori
-            berat_ideal = hitung_berat_badan_ideal(tinggi, jenis_kelamin)
-            bmi = hitung_bmi(berat, tinggi)
-            kategori = kategori_bmi(bmi)
-
-            # Hitung BMI berdasarkan usia
-            if usia < 18:
-                bmi_usia = bmi * 0.9
-            elif usia < 30:
-                bmi_usia = bmi * 1.0
-            elif usia < 50:
-                bmi_usia = bmi * 1.1
-            else:
-                bmi_usia = bmi * 1.2
-
-            # Tampilkan hasil dengan styling menarik
-            st.markdown("### 🎯 Hasil Perhitungan")
-            st.markdown(f"**Berat Badan Ideal Anda:** `{berat_ideal:.2f} kg`")
-            st.markdown(f"**Indeks Massa Tubuh (BMI):** `{bmi:.2f}`")
-            st.markdown(f"**BMI Berdasarkan Usia:** `{bmi_usia:.2f}`")
-            st.markdown(f"**Kategori Berat Badan:** `{kategori}`")
-
-            # Visualisasi kategori BMI dengan progress bar
-            if kategori == "Kurus":
-                st.progress(0.25)
-                st.warning("💡 Tips: Anda berada dalam kategori Kurus. Perhatikan asupan nutrisi dan konsultasikan dengan ahli gizi.")
-            elif kategori == "Normal":
-                st.progress(0.5)
-                st.success("🎉 Selamat! Anda berada dalam kategori Normal. Pertahankan gaya hidup sehat!")
-            elif kategori == "Gemuk":
-                st.progress(0.75)
-                st.warning("💡 Tips: Anda berada dalam kategori Gemuk. Mulailah pola hidup sehat dan olahraga teratur.")
-            else:
-                st.progress(1.0)
-                st.error("⚠️ Perhatian: Anda berada dalam kategori Obesitas. Segera konsultasikan dengan dokter atau ahli gizi.")
+            st.progress(1.0)
+            st.error("Perhatian: Anda berada dalam kategori Obesitas. Segera konsultasikan dengan dokter atau ahli gizi.")
 
     if st.button("Kembali ke Home 🏠"):
         go_home()
