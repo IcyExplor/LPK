@@ -189,21 +189,33 @@ def kalkulator_bmi():
         berat = st.number_input("Masukkan berat badan Anda (kg):", min_value=0.0, format="%.2f", key="berat")
 
     jenis_kelamin = st.radio("Masukkan jenis kelamin Anda:", ('Pria', 'Wanita'), key="jenis_kelamin")
+    usia = st.number_input("Masukkan usia Anda (tahun):", min_value=0, format="%d", key="usia")
 
     # Tombol untuk menghitung BMI
     if st.button("Hitung BMI 🧮", key="hitung_bmi_button"):
-        if tinggi <= 0 or berat <= 0:
-            st.error("Tinggi dan berat badan harus lebih dari 0.")
+        if tinggi <= 0 or berat <= 0 or usia <= 0:
+            st.error("Tinggi, berat badan, dan usia harus lebih dari 0.")
         else:
             # Hitung berat ideal, BMI, dan kategori
             berat_ideal = hitung_berat_badan_ideal(tinggi, jenis_kelamin)
             bmi = hitung_bmi(berat, tinggi)
             kategori = kategori_bmi(bmi)
 
+            # Hitung BMI berdasarkan usia
+            if usia < 18:
+                bmi_usia = bmi * 0.9
+            elif usia < 30:
+                bmi_usia = bmi * 1.0
+            elif usia < 50:
+                bmi_usia = bmi * 1.1
+            else:
+                bmi_usia = bmi * 1.2
+
             # Tampilkan hasil dengan styling menarik
             st.markdown("### 🎯 Hasil Perhitungan")
             st.markdown(f"**Berat Badan Ideal Anda:** `{berat_ideal:.2f} kg`")
             st.markdown(f"**Indeks Massa Tubuh (BMI):** `{bmi:.2f}`")
+            st.markdown(f"**BMI Berdasarkan Usia:** `{bmi_usia:.2f}`")
             st.markdown(f"**Kategori Berat Badan:** `{kategori}`")
 
             # Visualisasi kategori BMI dengan progress bar
