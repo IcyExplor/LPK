@@ -11,16 +11,35 @@ def hitung_berat_badan_ideal(tinggi, jenis_kelamin):
     else:
         return 0.85 * (tinggi - 100)
 
-# Fungsi untuk menentukan kategori BMI
-def kategori_bmi(bmi):
-    if bmi < 18.5:
-        return "Kurus"
-    elif 18.5 <= bmi < 24.9:
-        return "Normal"
-    elif 25 <= bmi < 29.9:
-        return "Gemuk"
-    else:
-        return "Obesitas"
+# Fungsi untuk menentukan kategori BMI dengan mempertimbangkan usia
+def kategori_bmi(bmi, usia):
+    if usia < 18:  # Untuk anak-anak atau remaja
+        if bmi < 18.5:
+            return "Kurus"
+        elif 18.5 <= bmi < 24.9:
+            return "Normal"
+        elif 25 <= bmi < 29.9:
+            return "Gemuk"
+        else:
+            return "Obesitas"
+    elif 18 <= usia <= 65:  # Untuk dewasa
+        if bmi < 18.5:
+            return "Kurus"
+        elif 18.5 <= bmi < 24.9:
+            return "Normal"
+        elif 25 <= bmi < 29.9:
+            return "Gemuk"
+        else:
+            return "Obesitas"
+    else:  # Untuk lansia
+        if bmi < 21:
+            return "Kurus"
+        elif 21 <= bmi < 27:
+            return "Normal"
+        elif 27 <= bmi < 32:
+            return "Gemuk"
+        else:
+            return "Obesitas"
 
 # Fungsi untuk menghitung BMI
 def hitung_bmi(berat, tinggi):
@@ -127,50 +146,6 @@ def home_page():
         if st.button("Mulai Hitung BMI 🧮"):
             st.session_state.page = "kalkulator"
 
-# Halaman Penjelasan BMI
-def penjelasan_bmi():
-    st.markdown(
-        """
-        <h1>
-            Penjelasan tentang BMI
-        </h1>
-        """,
-        unsafe_allow_html=True
-    )
-
-    st.markdown("---")
-
-    st.markdown(
-        """
-        ### Apa itu BMI?
-        **BMI (Body Mass Index)** atau Indeks Massa Tubuh adalah ukuran yang digunakan untuk menilai apakah berat badan seseorang 
-        sesuai dengan tinggi badannya. BMI dihitung dengan membagi berat badan (dalam kilogram) dengan kuadrat tinggi badan 
-        (dalam meter).
-
-        ### Kategori BMI:
-        - **Kurus**: BMI < 18.5
-        - **Normal**: 18.5 ≤ BMI < 24.9
-        - **Gemuk**: 25 ≤ BMI < 29.9
-        - **Obesitas**: BMI ≥ 30
-
-        ### Mengapa BMI Penting?
-        BMI membantu Anda memahami apakah berat badan Anda berada dalam kisaran yang sehat. Namun, perlu diingat bahwa BMI 
-        tidak memperhitungkan komposisi tubuh (seperti massa otot vs lemak), sehingga hasilnya mungkin tidak selalu akurat 
-        untuk semua orang, terutama atlet atau orang dengan massa otot tinggi.
-
-        ### Tips untuk Menjaga BMI Sehat:
-        1. Konsumsi makanan bergizi seimbang.
-        2. Rutin berolahraga.
-        3. Hindari kebiasaan tidak sehat seperti merokok atau konsumsi alkohol berlebihan.
-        4. Periksa kesehatan secara berkala.
-        """
-    )
-
-    st.markdown("---")
-
-    if st.button("Kembali ke Home 🏠"):
-        go_home()
-
 # Kalkulator BMI
 def kalkulator_bmi():
     st.markdown(
@@ -193,15 +168,16 @@ def kalkulator_bmi():
     with col2:
         berat = st.number_input("Masukkan berat badan Anda (kg):", min_value=0.0, format="%.2f", key="berat")
 
+    usia = st.number_input("Masukkan usia Anda (tahun):", min_value=0, format="%d", key="usia")
     jenis_kelamin = st.radio("Masukkan jenis kelamin Anda:", ('Pria', 'Wanita'), key="jenis_kelamin")
 
     if st.button("Hitung BMI 🧮", key="hitung_bmi_button"):
-        if tinggi <= 0 or berat <= 0:
-            st.error("Tinggi dan berat badan harus lebih dari 0.")
+        if tinggi <= 0 or berat <= 0 or usia <= 0:
+            st.error("Tinggi, berat badan, dan usia harus lebih dari 0.")
         else:
             berat_ideal = hitung_berat_badan_ideal(tinggi, jenis_kelamin)
             bmi = hitung_bmi(berat, tinggi)
-            kategori = kategori_bmi(bmi)
+            kategori = kategori_bmi(bmi, usia)
 
             st.markdown("### 🎯 Hasil Perhitungan")
             st.markdown(f"**Berat Badan Ideal Anda:** `{berat_ideal:.2f} kg`")
