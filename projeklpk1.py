@@ -119,21 +119,24 @@ if menu == "🏠 Beranda":
     st.info("💡 **Tips:** Jaga kesehatan dengan memilih makanan bergizi dan mengolahnya dengan cara yang tepat!")
 
 # --- Penilaian Kelayakan Makanan ---
-if menu == "🧮 Penilaian Kelayakan Makanan":
+if "menu" not in st.session_state:
+    st.session_state.menu = "🧮 Penilaian Kelayakan Makanan"
+
+if st.session_state.menu == "🧮 Penilaian Kelayakan Makanan":
     st.title("🔍 Penilaian Kelayakan Makanan")
 
-    # Pilih jenis makanan utama
+    # Pilih Jenis Makanan Utama
     jenis_makanan = st.selectbox("🍽️ Pilih Jenis Makanan", [
-        "Sayuran 🥦", 
-        "Buah-buahan 🍎", 
+        "Sayuran 🥦",
+        "Buah-buahan 🍎",
         "Daging 🍖"
     ])
 
-    # Menampilkan pilihan bahan makanan berdasarkan kategori yang dipilih
+    # Pilihan bahan makanan berdasarkan kategori
     if jenis_makanan == "Buah-buahan 🍎":
         bahan_makanan = st.selectbox("🍏 Pilih Buah", [
-            "Anggur", "Mangga","Alpukat", "Pisang", "Jeruk", "Melon", 
-            "Semangka", "Strawberry", "Buah Potong", "Pepaya"
+            "Anggur", "Mangga", "Alpukat", "Pisang", "Jeruk",
+            "Melon", "Semangka", "Strawberry", "Buah Potong", "Pepaya"
         ])
     elif jenis_makanan == "Sayuran 🥦":
         bahan_makanan = st.selectbox("🥦 Pilih Sayuran", [
@@ -144,204 +147,82 @@ if menu == "🧮 Penilaian Kelayakan Makanan":
             "Daging Sapi", "Daging Ayam", "Ikan"
         ])
 
-    # Menampilkan pilihan yang dipilih
-    st.write(f"Anda memilih: {bahan_makanan}")
-
-    # Input tanggal pembelian
+    # Input Tanggal Pembelian
     tanggal_input = st.date_input("📅 Tanggal Pembelian")
 
-    # Pilih kondisi penyimpanan
+    # Kondisi Penyimpanan
     kondisi_penyimpanan = st.selectbox("❄️ Kondisi Penyimpanan", [
         "Suhu Ruang 🌡️", "Kulkas (0–4°C) ❄️", "Freezer (-18°C) 🧊"
     ])
-    
-    # Pilih perubahan fisik
+
+    # Perubahan Fisik
     perubahan_fisik = st.multiselect("⚠️ Perubahan Fisik", [
-        "Perubahan warna 🎨", "Bau tidak sedap 🤢", 
+        "Perubahan warna 🎨", "Bau tidak sedap 🤢",
         "Tekstur berlendir 🦠"
     ])
 
-    # Menampilkan pilihan bahan makanan dan cek kelayakan
-    
+    # Tombol untuk Cek Kelayakan
     if st.button("🔎 Cek Kelayakan"):
-        animation_effect()
-    
-    hari_ini = datetime.now().date()
-    lama_simpan = (hari_ini - tanggal_input).days
+        # Validasi Tanggal
+        hari_ini = datetime.now().date()
+        if tanggal_input > hari_ini:
+            st.error("❗ Tanggal yang Anda masukkan tidak valid. Harap masukkan tanggal sebelum hari ini.")
+        else:
+            # Hitung Lama Penyimpanan
+            lama_simpan = (hari_ini - tanggal_input).days
 
-    if tanggal_input > hari_ini:
-        st.error("❗ Tanggal yang Anda masukkan tidak valid. Silakan masukkan tanggal yang logis.")
-    if True:
+            # Tampilkan Informasi Berdasarkan Kategori dan Kondisi
+            st.write(f"### Informasi untuk: {bahan_makanan}")
             if jenis_makanan == "Buah-buahan 🍎":
                 if bahan_makanan == "Pisang":
-                    st.warning("🍌 Pisang yang muncul titik coklat masih layak dimakan, namun rasanya lebih manis. Jika kulit menghitam, bisa jadi sudah sangat matang.")
+                    st.warning("🍌 Pisang yang muncul titik coklat masih layak dimakan, namun jika kulit menghitam bisa jadi sudah terlalu matang.")
                     if kondisi_penyimpanan == "Suhu Ruang 🌡️":
-                        st.info("**Suhu Ruang 🌡️**: 3–5 hari. Pisang tidak perlu disimpan di kulkas.")
+                        st.info(f"Suhu Ruang: 3–5 hari. Anda telah menyimpan selama {lama_simpan} hari.")
                     elif kondisi_penyimpanan == "Kulkas ❄️":
-                        st.info("**Kulkas ❄️**: Hingga 7 hari, namun pastikan tidak terlalu dingin agar tidak mempercepat kerusakan.")
+                        st.info(f"Kulkas: Hingga 7 hari. Anda telah menyimpan selama {lama_simpan} hari.")
                     elif kondisi_penyimpanan == "Freezer 🧊":
-                        st.info("**Freezer 🧊**: Tidak direkomendasikan untuk pisang mentah.")
+                        st.info("Tidak direkomendasikan untuk menyimpan pisang mentah di freezer.")
 
                 elif bahan_makanan == "Mangga":
-                    st.warning("🥭 Mangga yang berubah warna dari hijau ke kuning/oranye adalah tanda kematangan dan tetap layak dikonsumsi.")
+                    st.warning("🥭 Mangga yang berubah warna menjadi kuning/oranye menunjukkan kematangan.")
                     if kondisi_penyimpanan == "Suhu Ruang 🌡️":
-                        st.info("**Suhu Ruang 🌡️**: 2–3 hari. Simpan di kulkas untuk memperpanjang kesegaran.")
+                        st.info(f"Suhu Ruang: 2–3 hari. Anda telah menyimpan selama {lama_simpan} hari.")
                     elif kondisi_penyimpanan == "Kulkas ❄️":
-                        st.info("**Kulkas ❄️**: 5–7 hari. Simpan dalam wadah tertutup untuk mempertahankan kelembapan.")
+                        st.info(f"Kulkas: 5–7 hari. Anda telah menyimpan selama {lama_simpan} hari.")
                     elif kondisi_penyimpanan == "Freezer 🧊":
-                        st.info("**Freezer 🧊**: Hingga 6 bulan jika dibuat puree terlebih dahulu.")
+                        st.info("Freezer: Hingga 6 bulan jika dibuat puree terlebih dahulu.")
 
-                elif bahan_makanan == "Anggur 🍇":
-                    st.warning("🍇 Anggur yang lembek atau mulai berair menandakan kerusakan. Sebaiknya buang bagian yang busuk untuk mencegah kontaminasi.")
-                    if kondisi_penyimpanan == "Suhu Ruang 🌡️":
-                        st.info("**Suhu Ruang 🌡️**: 5–7 hari. Pisah anggur yang masih baik dengan anggur yang sudah membusuk. Jauhkan dari bahan makanan lain dengan aroma menyengat.")
-                    elif kondisi_penyimpanan == "Kulkas ❄️":
-                        st.info("**Kulkas ❄️**: 2 minggu. Simpan dalam plastik kedap udara atau wadah tertutup, pisahkan anggur yang busuk.")
-                    elif kondisi_penyimpanan == "Freezer 🧊":
-                        st.info("**Freezer 🧊**: 1 bulan. Jangan dicairkan karena buah akan menjadi lembek setelah beku.")
-
-                elif bahan_makanan == "Alpukat 🥑":
-                    st.warning("🥑 Alpukat yang berubah warna menjadi terlalu coklat atau lembek menandakan bahwa buah sudah tidak segar.")
-                    if kondisi_penyimpanan == "Suhu Ruang 🌡️":
-                        st.info("**Suhu Ruang 🌡️**: 3–5 hari. Setelah matang, konsumsilah segera. Jika belum matang, simpan di suhu ruang.")
-                    elif kondisi_penyimpanan == "Kulkas ❄️":
-                        st.info("**Kulkas ❄️**: Tidak disarankan, alpukat akan cepat rusak bahkan di kulkas.")
-                    elif kondisi_penyimpanan == "Freezer 🧊":
-                        st.info("**Freezer 🧊**: Tidak disarankan untuk dibekukan.")
-
-                elif bahan_makanan == "Jeruk 🍊":
-                    st.warning("🍊 Jeruk dengan kulit yang keriput tetap layak dimakan tetapi teksturnya mungkin kurang segar.")
-                    if kondisi_penyimpanan == "Suhu Ruang 🌡️":
-                        st.info("**Suhu Ruang 🌡️**: 1 minggu. Simpan jeruk di suhu ruang jika akan dimakan dalam waktu dekat.")
-                    elif kondisi_penyimpanan == "Kulkas ❄️":
-                        st.info("**Kulkas ❄️**: 2–3 minggu. Jeruk akan tetap segar lebih lama di kulkas.")
-                    elif kondisi_penyimpanan == "Freezer 🧊":
-                        st.info("**Freezer 🧊**: Tidak disarankan, bisa mengubah tekstur buah.")
-
-                elif bahan_makanan == "Melon 🍉":
-                    st.warning("🍈 Melon yang terlalu lembek atau berair menandakan mulai rusak.")
-                    if kondisi_penyimpanan == "Suhu Ruang 🌡️":
-                        st.info("**Suhu Ruang 🌡️**: 3–5 hari. Simpan melon di suhu ruang agar tetap segar.")
-                    elif kondisi_penyimpanan == "Kulkas ❄️":
-                        st.info("**Kulkas ❄️**: 1 minggu. Setelah dipotong, simpan di kulkas.")
-                    elif kondisi_penyimpanan == "Freezer 🧊":
-                        st.info("**Freezer 🧊**: Tidak disarankan untuk dibekukan.")
-
-                elif bahan_makanan == "Semangka 🍉":
-                    st.warning("🍉 Semangka yang mulai lembek atau berair sebaiknya tidak dikonsumsi.")
-                    if kondisi_penyimpanan == "Suhu Ruang 🌡️":
-                        st.info("**Suhu Ruang 🌡️**: 3–5 hari. Semangka utuh lebih baik disimpan di suhu ruang.")
-                    elif kondisi_penyimpanan == "Kulkas ❄️":
-                        st.info("**Kulkas ❄️**: 1 minggu. Setelah dipotong, simpan di kulkas.")
-                    elif kondisi_penyimpanan == "Freezer 🧊":
-                        st.info("**Freezer 🧊**: Tidak disarankan untuk dibekukan.")
-
-                elif bahan_makanan == "Strawberry 🍓":
-                    st.warning("🍓 Strawberry yang berjamur atau terlalu lembek sebaiknya tidak dimakan.")
-                    if kondisi_penyimpanan == "Suhu Ruang 🌡️":
-                        st.info("**Suhu Ruang 🌡️**: 1–2 hari. Strawberry lebih baik disimpan di kulkas.")
-                    elif kondisi_penyimpanan == "Kulkas ❄️":
-                        st.info("**Kulkas ❄️**: 5–7 hari. Simpan dalam wadah kedap udara.")
-                    elif kondisi_penyimpanan == "Freezer 🧊":
-                        st.info("**Freezer 🧊**: Bisa dibekukan untuk jangka waktu lebih lama, cocok untuk smoothie.")
-
-                elif bahan_makanan == "Buah Potong 🍉":
-                    st.warning("🍉 Buah potong sangat mudah rusak, sebaiknya segera dimakan atau disimpan dengan baik.")
-                    if kondisi_penyimpanan == "Suhu Ruang 🌡️":
-                        st.info("**Suhu Ruang 🌡️**: Tidak disarankan. Buah potong harus segera disimpan di kulkas.")
-                    elif kondisi_penyimpanan == "Kulkas ❄️":
-                        st.info("**Kulkas ❄️**: 1–2 hari. Buah potong harus disimpan dalam wadah kedap udara.")
-                    elif kondisi_penyimpanan == "Freezer 🧊":
-                        st.info("**Freezer 🧊**: Tidak disarankan, kecuali untuk smoothie atau jus.")
-
-                elif bahan_makanan == "Pepaya 🍈":
-                    st.warning("🍈 Pepaya yang terlalu lembek atau berair menandakan mulai rusak.")
-                    if kondisi_penyimpanan == "Suhu Ruang 🌡️":
-                        st.info("**Suhu Ruang 🌡️**: 3–5 hari. Simpan pepaya di suhu ruang.")
-                    elif kondisi_penyimpanan == "Kulkas ❄️":
-                        st.info("**Kulkas ❄️**: 1 minggu. Jika sudah dipotong, simpan di kulkas.")
-                    elif kondisi_penyimpanan == "Freezer 🧊":
-                        st.info("**Freezer 🧊**: Tidak disarankan untuk dibekukan.")
-
-                # Tambahkan logika yang sama untuk bahan makanan lainnya
+                # Tambahkan logika serupa untuk buah lainnya...
 
             elif jenis_makanan == "Sayuran 🥦":
                 if bahan_makanan == "Kubis":
-                    st.warning("🥬 Kubis yang lembek atau layu menunjukkan kehilangan kesegaran. Jika berlendir, sebaiknya dibuang.")
+                    st.warning("🥬 Kubis yang lembek atau layu menunjukkan kehilangan kesegaran.")
                     if kondisi_penyimpanan == "Suhu Ruang 🌡️":
-                        st.info("**Suhu Ruang 🌡️**: 1–2 hari. Simpan di kulkas untuk memperpanjang umur simpan.")
+                        st.info(f"Suhu Ruang: 1–2 hari. Anda telah menyimpan selama {lama_simpan} hari.")
                     elif kondisi_penyimpanan == "Kulkas ❄️":
-                        st.info("**Kulkas ❄️**: 1–2 minggu. Simpan di laci khusus sayur agar lebih segar.")
+                        st.info(f"Kulkas: 1–2 minggu. Anda telah menyimpan selama {lama_simpan} hari.")
                     elif kondisi_penyimpanan == "Freezer 🧊":
-                        st.info("**Freezer 🧊**: Tidak direkomendasikan karena dapat merusak tekstur kubis.")
+                        st.info("Tidak direkomendasikan untuk membekukan kubis.")
 
-                elif bahan_makanan == "Wortel 🥕":
-                    st.warning("🥕 Wortel yang mulai lembek atau berjamur sebaiknya tidak dikonsumsi.")
-                    if kondisi_penyimpanan == "Suhu Ruang 🌡️":
-                        st.info("**Suhu Ruang 🌡️**: 5–7 hari. Wortel dapat disimpan di suhu ruang jika tidak terlalu lama.")
-                    elif kondisi_penyimpanan == "Kulkas ❄️":
-                        st.info("**Kulkas ❄️**: 2–3 minggu. Simpan dalam kantong plastik atau wadah kedap udara di kulkas.")
-                    elif kondisi_penyimpanan == "Freezer 🧊":
-                        st.info("**Freezer 🧊**: 3 bulan. Wortel bisa dibekukan setelah dipotong dan disiapkan dengan baik.")
-
-                elif bahan_makanan == "Bayam 🌿":
-                    st.warning("🌿 Bayam yang menguning atau berlendir sudah tidak layak dikonsumsi.")
-                    if kondisi_penyimpanan == "Suhu Ruang 🌡️":
-                        st.info("**Suhu Ruang 🌡️**: 1 hari. Bayam harus segera disimpan di kulkas karena mudah layu di suhu ruang.")
-                    elif kondisi_penyimpanan == "Kulkas ❄️":
-                        st.info("**Kulkas ❄️**: 2–3 hari. Simpan dalam kantong plastik berlubang atau wadah kedap udara.")
-                    elif kondisi_penyimpanan == "Freezer 🧊":
-                        st.info("**Freezer 🧊**: 1 bulan. Bayam bisa dibekukan setelah direbus terlebih dahulu.")
-
-                elif bahan_makanan == "Kentang 🥔":
-                    st.warning("🥔 Kentang yang bertunas atau hijau tidak layak konsumsi karena mengandung solanin.")
-                    if kondisi_penyimpanan == "Suhu Ruang 🌡️":
-                        st.info("**Suhu Ruang 🌡️**: 1 minggu. Simpan kentang di suhu ruang di tempat yang sejuk dan gelap.")
-                    elif kondisi_penyimpanan == "Kulkas ❄️":
-                        st.info("**Kulkas ❄️**: Tidak disarankan. Kentang akan berubah rasa dan tekstur jika disimpan di kulkas.")
-                    elif kondisi_penyimpanan == "Freezer 🧊":
-                        st.info("**Freezer 🧊**: Tidak disarankan. Kentang akan kehilangan tekstur setelah dibekukan.")
-
-                elif bahan_makanan == "Mentimun 🥒":
-                    st.warning("🥒 Mentimun yang lembek atau berlendir menandakan sudah tidak segar.")
-                    if kondisi_penyimpanan == "Suhu Ruang 🌡️":
-                        st.info("**Suhu Ruang 🌡️**: 1–2 hari. Mentimun lebih baik disimpan di kulkas untuk menjaga kesegarannya.")
-                    elif kondisi_penyimpanan == "Kulkas ❄️":
-                        st.info("**Kulkas ❄️**: 1 minggu. Simpan dalam kantong plastik atau wadah kedap udara.")
-                    elif kondisi_penyimpanan == "Freezer 🧊":
-                        st.info("**Freezer 🧊**: Tidak disarankan. Mentimun akan kehilangan tekstur setelah dibekukan.")
-
-                # Tambahkan logika yang sama untuk bahan makanan lainnya
+                # Tambahkan logika serupa untuk sayuran lainnya...
 
             elif jenis_makanan == "Daging 🍖":
                 if bahan_makanan == "Daging Sapi":
-                    st.warning("🥩 Daging sapi yang berwarna kecoklatan atau berlendir bisa menunjukkan mulai rusak. Pastikan tidak berbau busuk.")
+                    st.warning("🥩 Daging sapi yang berwarna kecoklatan atau berlendir menunjukkan mulai rusak.")
                     if kondisi_penyimpanan == "Suhu Ruang 🌡️":
-                        st.info("**Suhu Ruang 🌡️**: Tidak disarankan. Daging sapi harus segera dimasak.")
+                        st.info("Daging sapi tidak boleh disimpan di suhu ruang lebih dari 2 jam.")
                     elif kondisi_penyimpanan == "Kulkas ❄️":
-                        st.info("**Kulkas ❄️**: 1–2 hari untuk daging mentah. Simpan di wadah tertutup.")
+                        st.info(f"Kulkas: 1–2 hari. Anda telah menyimpan selama {lama_simpan} hari.")
                     elif kondisi_penyimpanan == "Freezer 🧊":
-                        st.info("**Freezer 🧊**: Hingga 6 bulan jika disimpan dalam kemasan kedap udara.")
+                        st.info("Freezer: Hingga 6 bulan dalam kemasan kedap udara.")
 
-                elif bahan_makanan == "Daging Ayam 🍗":
-                    st.warning("🍗 Daging ayam harus ditangani dengan hati-hati untuk menjaga kualitasnya.")
-                    if kondisi_penyimpanan == "Suhu Ruang 🌡️":
-                        st.info("**Suhu Ruang 🌡️**: 2 jam. Daging ayam harus disimpan di suhu ruang tidak lebih dari 2 jam.")
-                    elif kondisi_penyimpanan == "Kulkas (0–4°C) ❄️":
-                        st.info("**Kulkas (0–4°C) ❄️**: 1–2 hari. Simpan di bagian bawah kulkas dalam wadah kedap udara.")
-                    elif kondisi_penyimpanan == "Freezer (-18°C) 🧊":
-                        st.info("**Freezer (-18°C) 🧊**: 9–12 bulan. Daging ayam dapat dibekukan dalam plastik kedap udara.")
+                # Tambahkan logika serupa untuk daging lainnya...
 
-                elif bahan_makanan == "Ikan 🐟":
-                    st.warning("🐟 Ikan harus segera disimpan untuk menjaga kesegaran dan mencegah kerusakan.")
-                    if kondisi_penyimpanan == "Suhu Ruang 🌡️":
-                        st.info("**Suhu Ruang 🌡️**: 1 jam. Ikan tidak boleh dibiarkan lebih dari 1 jam di suhu ruang, terutama dalam suhu panas.")
-                    elif kondisi_penyimpanan == "Kulkas (0–4°C) ❄️":
-                        st.info("**Kulkas (0–4°C) ❄️**: 1–2 hari. Ikan segar sebaiknya disimpan di kulkas dalam wadah tertutup rapat.")
-                    elif kondisi_penyimpanan == "Freezer (-18°C) 🧊":
-                        st.info("**Freezer (-18°C) 🧊**: 3–6 bulan. Simpan ikan dalam kantong kedap udara di freezer untuk menjaga kesegaran.")
-    else:
-        st.success("✅ Tidak ada perubahan fisik. Makanan kemungkinan masih layak dimakan.")
+            # Evaluasi Perubahan Fisik
+            if perubahan_fisik:
+                st.error(f"Perubahan fisik terdeteksi: {', '.join(perubahan_fisik)}. Makanan kemungkinan tidak layak konsumsi.")
+            else:
+                st.success("✅ Tidak ada perubahan fisik terdeteksi. Makanan kemungkinan masih layak dimakan.")
 
                 
 # --- Info ---
