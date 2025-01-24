@@ -1,27 +1,28 @@
 import streamlit as st
 from PIL import Image
 
-
 # Konfigurasi halaman
 st.set_page_config(page_title="Food Freshness App", page_icon="🍎", layout="wide")
 
 # Palet Warna
 PRIMARY_COLOR = "#4CAF50"
 SECONDARY_COLOR = "#F44336"
-BACKGROUND_COLOR = "#E3F2FD"  # Biru muda
-TEXT_COLOR = "#333333"
+BACKGROUND_COLOR_LIGHT = "#E3F2FD"  # Biru muda terang
+BACKGROUND_COLOR_DARK = "#333333"  # Warna latar gelap
+TEXT_COLOR_LIGHT = "#333333"  # Warna teks terang
+TEXT_COLOR_DARK = "#FFFFFF"  # Warna teks gelap
 ACCENT_COLOR = "#FFC107"
 
 # CSS Kustom
 st.markdown(f"""
     <style>
     .main {{
-        background-color: {BACKGROUND_COLOR} !important;
-        color: {TEXT_COLOR};
+        background-color: {BACKGROUND_COLOR_LIGHT} !important;
+        color: {TEXT_COLOR_LIGHT};
         font-family: 'Poppins', sans-serif;
     }}
     .stApp {{
-        background-color: {BACKGROUND_COLOR} !important;
+        background-color: {BACKGROUND_COLOR_LIGHT} !important;
     }}
     .stButton>button {{
         background-color: {PRIMARY_COLOR};
@@ -52,7 +53,7 @@ st.markdown(f"""
     }}
     .subtitle {{
         font-size: 24px;
-        color: {TEXT_COLOR};
+        color: {TEXT_COLOR_LIGHT};
         margin-bottom: 20px;
     }}
     .image-container {{
@@ -60,8 +61,29 @@ st.markdown(f"""
         margin: 20px 0;
     }}
     </style>
-""", unsafe_allow_html=True)
+    <script>
+    const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)');
+    const body = document.querySelector('body');
 
+    if (prefersDarkMode.matches) {{
+        body.style.backgroundColor = '{BACKGROUND_COLOR_DARK}';
+        body.style.color = '{TEXT_COLOR_DARK}';
+    }} else {{
+        body.style.backgroundColor = '{BACKGROUND_COLOR_LIGHT}';
+        body.style.color = '{TEXT_COLOR_LIGHT}';
+    }}
+
+    prefersDarkMode.addEventListener('change', (e) => {{
+        if (e.matches) {{
+            body.style.backgroundColor = '{BACKGROUND_COLOR_DARK}';
+            body.style.color = '{TEXT_COLOR_DARK}';
+        }} else {{
+            body.style.backgroundColor = '{BACKGROUND_COLOR_LIGHT}';
+            body.style.color = '{TEXT_COLOR_LIGHT}';
+        }}
+    }});
+    </script>
+""", unsafe_allow_html=True)
 
 # --- Efek Animasi Balon dan Salju ---
 def animation_effect():
@@ -129,11 +151,10 @@ if menu == "🏠 Beranda":
 
     - 📅 **Pengecekan Tanggal Kedaluwarsa**: Pantau masa simpan makanan agar tetap aman.  
     """)
-
+    
     # Catatan di bagian bawah
     st.markdown("---")
     st.info("💡 **Tips:** Jaga kesehatan dengan memilih makanan bergizi dan mengolahnya dengan cara yang tepat!")
-
 
 # Menampilkan pilihan bahan makanan berdasarkan kategori yang dipilih
 if menu == "🧮 Penilaian Kelayakan Makanan":
