@@ -166,9 +166,7 @@ from datetime import datetime
 
 # Menampilkan pilihan bahan makanan berdasarkan kategori yang dipilih
 if menu == "🧮 Penilaian Kelayakan Makanan":
-    perubahan_fisik = st.checkbox("⚠️ Apakah terdapat perubahan fisik pada makanan?", key="perubahan_fisik")
-    
-    if st.button("🔎 Cek Kelayakan"):
+    perubahan_fisik = st.button("🔎 Cek Kelayakan"):
         animation_effect()
     hari_ini = datetime.now().date()
     lama_simpan = (hari_ini - tanggal_input).days
