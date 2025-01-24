@@ -190,37 +190,37 @@ if menu == "🧮 Penilaian Kelayakan Makanan":
                         "Suhu Ruang 🌡️": "5–7 hari. Pisahkan anggur busuk.",
                         "Kulkas (0–4°C) ❄️": "2 minggu. Gunakan plastik kedap udara.",
                         "Freezer (-18°C) 🧊": "1 bulan. Jangan dicairkan karena buah menjadi lembek."
-                    }
+                    },
                     "Alpukat": {
                         "Suhu Ruang 🌡️": "3–5 hari. Setelah matang, konsumsilah segera. Jika belum matang, simpan di suhu ruang.",
                         "Kulkas (0–4°C) ❄️": "Tidak disarankan, alpukat akan cepat rusak bahkan di kulkas.",
                         "Freezer (-18°C) 🧊": "Tidak disarankan untuk dibekukan."
-                    }
+                    },
                     "Jeruk": {
                         "Suhu Ruang 🌡️": "1 minggu. Simpan jeruk di suhu ruang jika akan dimakan dalam waktu dekat.",
                         "Kulkas (0–4°C) ❄️": "2–3 minggu. Jeruk akan tetap segar lebih lama di kulkas.",
                         "Freezer (-18°C) 🧊": "Tidak disarankan, bisa mengubah tekstur buah."
-                    }
+                    },
                     "Melon": {
                         "Suhu Ruang 🌡️": "3–5 hari. Simpan melon di suhu ruang agar tetap segar.",
                         "Kulkas (0–4°C) ❄️": "1 minggu. Setelah dipotong, simpan di kulkas.",
                         "Freezer (-18°C) 🧊": "Tidak disarankan untuk dibekukan."
-                    }
+                    },
                     "Semangka": {
                         "Suhu Ruang 🌡️": "3–5 hari. Semangka utuh lebih baik disimpan di suhu ruang.",
                         "Kulkas (0–4°C) ❄️": "1 minggu. Setelah dipotong, simpan di kulkas.",
                         "Freezer (-18°C) 🧊": "Tidak disarankan untuk dibekukan."
-                    }
+                    },
                     "Strawberry": {
                         "Suhu Ruang 🌡️": "1–2 hari. Strawberry lebih baik disimpan di kulkas.",
                         "Kulkas (0–4°C) ❄️": "5–7 hari. Simpan dalam wadah kedap udara.",
                         "Freezer (-18°C) 🧊": "Bisa dibekukan untuk jangka waktu lebih lama, cocok untuk smoothie."
-                    }
+                    },
                     "Buah Potong": {
                         "Suhu Ruang 🌡️": "Tidak disarankan. Buah potong harus segera disimpan di kulkas.",
                         "Kulkas (0–4°C) ❄️": "1–2 hari. Buah potong harus disimpan dalam wadah kedap udara.",
                         "Freezer (-18°C) 🧊": "Tidak disarankan, kecuali untuk smoothie atau jus."
-                    }
+                    },
                     "Pepaya": {
                         "Suhu Ruang 🌡️": "3–5 hari. Simpan pepaya di suhu ruang.",
                         "Kulkas (0–4°C) ❄️": "1 minggu. Jika sudah dipotong, simpan di kulkas.",
@@ -237,22 +237,22 @@ if menu == "🧮 Penilaian Kelayakan Makanan":
                         "Suhu Ruang 🌡️": "1–2 hari. Simpan di kulkas untuk memperpanjang umur simpan.",
                         "Kulkas (0–4°C) ❄️": "1–2 minggu. Gunakan laci khusus sayur.",
                         "Freezer (-18°C) 🧊": "Tidak direkomendasikan karena merusak tekstur."
-                    }
+                    },
                     "Wortel": {
                         "Suhu Ruang 🌡️": "5–7 hari. Wortel dapat disimpan di suhu ruang jika tidak terlalu lama.",
                         "Kulkas (0–4°C) ❄️": "2–3 minggu. Simpan dalam kantong plastik atau wadah kedap udara di kulkas.",
                         "Freezer (-18°C) 🧊": "3 bulan. Wortel bisa dibekukan setelah dipotong dan disiapkan dengan baik."
-                    }
+                    },
                     "Bayam": {
                         "Suhu Ruang 🌡️": "1 hari. Bayam harus segera disimpan di kulkas karena mudah layu di suhu ruang.",
                         "Kulkas (0–4°C) ❄️": "2–3 hari. Simpan dalam kantong plastik berlubang atau wadah kedap udara.",
                         "Freezer (-18°C) 🧊": "1 bulan. Bayam bisa dibekukan setelah direbus terlebih dahulu."
-                    }
+                    },
                     "Kentang": {
                         "Suhu Ruang 🌡️": "1 minggu. Simpan kentang di suhu ruang di tempat yang sejuk dan gelap.",
                         "Kulkas (0–4°C) ❄️": "Tidak disarankan. Kentang akan berubah rasa dan tekstur jika disimpan di kulkas.",
                         "Freezer (-18°C) 🧊": "Tidak disarankan. Kentang akan kehilangan tekstur setelah dibekukan."
-                    }
+                    },
                     "Mentimun": {
                         "Suhu Ruang 🌡️": "1–2 hari. Mentimun lebih baik disimpan di kulkas untuk menjaga kesegarannya.",
                         "Kulkas (0–4°C) ❄️": "1 minggu. Simpan dalam kantong plastik atau wadah kedap udara.",
@@ -269,12 +269,12 @@ if menu == "🧮 Penilaian Kelayakan Makanan":
                         "Suhu Ruang 🌡️": "Tidak disarankan. Segera masak.",
                         "Kulkas (0–4°C) ❄️": "1–2 hari untuk daging mentah.",
                         "Freezer (-18°C) 🧊": "Hingga 6 bulan jika dikemas kedap udara."
-                    }
+                    },
                     "Daging Ayam": {
                         "Suhu Ruang 🌡️": "2 jam. Daging ayam harus disimpan di suhu ruang tidak lebih dari 2 jam.",
                         "Kulkas (0–4°C) ❄️": "1–2 hari. Simpan di bagian bawah kulkas dalam wadah kedap udara.",
                         "Freezer (-18°C) 🧊": "9–12 bulan. Daging ayam dapat dibekukan dalam plastik kedap udara."
-                    }
+                    },
                     "Ikan": {
                         "Suhu Ruang 🌡️": "1 jam. Ikan tidak boleh dibiarkan lebih dari 1 jam di suhu ruang, terutama dalam suhu panas.",
                         "Kulkas (0–4°C) ❄️": "1–2 hari. Ikan segar sebaiknya disimpan di kulkas dalam wadah tertutup rapat.",
