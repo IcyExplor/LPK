@@ -340,8 +340,6 @@ if menu == "🧮 Penilaian Kelayakan Makanan":
     ])
 
     # Menampilkan pilihan bahan makanan dan cek kelayakan
-    perubahan_fisik_checkbox = st.checkbox("⚠️ Apakah terdapat perubahan fisik pada makanan?", key="perubahan_fisik")
-    
     if st.button("🔎 Cek Kelayakan"):
         animation_effect()
     
