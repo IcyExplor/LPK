@@ -1,6 +1,6 @@
 import streamlit as st
 from PIL import Image
-
+from datetime import datetime
 
 # Konfigurasi halaman
 st.set_page_config(page_title="Food Freshness App", page_icon="🍎", layout="wide")
@@ -69,12 +69,14 @@ def animation_effect():
     for _ in range(3):
         st.markdown('<div class="snowflake">❄️</div>', unsafe_allow_html=True)
 
+
 # --- Navigasi Sidebar ---
 menu = st.sidebar.selectbox("📂 Menu", [
-    "🏠 Beranda", 
-    "🧮 Penilaian Kelayakan Makanan", 
+    "🏠 Beranda",
+    "🧮 Penilaian Kelayakan Makanan",
     "ℹ️ Info"
 ])
+
 
 # --- Beranda ---
 if menu == "🏠 Beranda":
@@ -89,6 +91,7 @@ if menu == "🏠 Beranda":
     Aplikasi ini dirancang untuk membantu Anda mengonsumsi makanan yang **sehat** dan **aman** dengan fitur menarik berikut:
 
     - 📅 **Pengecekan Tanggal Kedaluwarsa**: Pantau masa simpan makanan agar tetap aman.  
+    - 🍏 **Pengecekan Kesegaran Makanan**: Cek kondisi fisik makanan Anda.
     """)
 
     # Catatan di bagian bawah
@@ -96,21 +99,21 @@ if menu == "🏠 Beranda":
     st.info("💡 **Tips:** Jaga kesehatan dengan memilih makanan bergizi dan mengolahnya dengan cara yang tepat!")
 
 
-# Menampilkan pilihan bahan makanan berdasarkan kategori yang dipilih
+# --- Penilaian Kelayakan Makanan ---
 if menu == "🧮 Penilaian Kelayakan Makanan":
     st.title("🔍 Penilaian Kelayakan Makanan")
 
     # Pilih jenis makanan utama
     jenis_makanan = st.selectbox("🍽️ Pilih Jenis Makanan", [
-        "Sayuran 🥦", 
-        "Buah-buahan 🍎", 
+        "Sayuran 🥦",
+        "Buah-buahan 🍎",
         "Daging 🍖"
     ])
 
     # Menampilkan pilihan bahan makanan berdasarkan kategori yang dipilih
     if jenis_makanan == "Buah-buahan 🍎":
         bahan_makanan = st.selectbox("🍏 Pilih Buah", [
-            "Anggur", "Mangga","Alpukat", "Pisang", "Jeruk", "Melon", 
+            "Anggur", "Mangga", "Alpukat", "Pisang", "Jeruk", "Melon",
             "Semangka", "Strawberry", "Buah Potong", "Pepaya"
         ])
     elif jenis_makanan == "Sayuran 🥦":
@@ -127,18 +130,28 @@ if menu == "🧮 Penilaian Kelayakan Makanan":
 
     # Input tanggal pembelian
     tanggal_input = st.date_input("📅 Tanggal Pembelian")
-    hari_ini = datetime.now().date()
-    if tanggal_input > hari_ini:
-        st.error("❗ Tanggal yang Anda masukkan tidak valid. Silakan masukkan tanggal yang logis.")
-    else:
-        # Menangani kelayakan berdasarkan perubahan fisik dan lama simpan
-        metode_penyimpanan = st.selectbox("📦 Pilih Metode Penyimpanan:", ["Suhu Ruang 🌡️", "Kulkas ❄️", "Freezer 🧊"])
 
-        # Pilih perubahan fisik
-        perubahan_fisik = st.multiselect("⚠️ Perubahan Fisik", [
-            "Perubahan warna 🎨", "Bau tidak sedap 🤢", 
-            "Tekstur berlendir 🦠"
-        ])
+    # Pilih kondisi penyimpanan
+    kondisi_penyimpanan = st.selectbox("❄️ Kondisi Penyimpanan", [
+        "Suhu Ruang 🌡️", "Kulkas (0–4°C) ❄️", "Freezer (-18°C) 🧊"
+    ])
+
+    # Pilih perubahan fisik
+    perubahan_fisik = st.multiselect("⚠️ Perubahan Fisik", [
+        "Perubahan warna 🎨", "Bau tidak sedap 🤢",
+        "Tekstur berlendir 🦠"
+    ])
+
+    if st.button("🔎 Cek Kelayakan"):
+        animation_effect()
+        hari_ini = datetime.now().date()
+        lama_simpan = (hari_ini - tanggal_input).days
+
+        if tanggal_input > hari_ini:
+            st.error("❗ Tanggal yang Anda masukkan tidak valid. Silakan masukkan tanggal yang logis.")
+        else:
+            # Menangani kelayakan berdasarkan perubahan fisik dan lama simpan
+        metode_penyimpanan = st.selectbox("📦 Pilih Metode Penyimpanan:", ["Suhu Ruang 🌡️", "Kulkas ❄️", "Freezer 🧊"])
 
         if perubahan_fisik:
             if jenis_makanan == "Buah-buahan 🍎":
@@ -310,32 +323,9 @@ if menu == "🧮 Penilaian Kelayakan Makanan":
                     elif metode_penyimpanan == "Freezer (-18°C) 🧊":
                         st.info("**Freezer (-18°C) 🧊**: 3–6 bulan. Simpan ikan dalam kantong kedap udara di freezer untuk menjaga kesegaran.")
 
-    # Pilih perubahan fisik
-    perubahan_fisik = st.multiselect("⚠️ Perubahan Fisik", [
-        "Perubahan warna 🎨", "Bau tidak sedap 🤢", 
-        "Tekstur berlendir 🦠"
-    ])
-
-
-import streamlit as st
-from datetime import datetime
-
-# Menampilkan pilihan bahan makanan berdasarkan kategori yang dipilih
-if menu == "🧮 Penilaian Kelayakan Makanan":
-    perubahan_fisik = st.checkbox("⚠️ Apakah terdapat perubahan fisik pada makanan?", key="perubahan_fisik")
-    
-    if st.button("🔎 Cek Kelayakan"):
-        animation_effect()
-    hari_ini = datetime.now().date()
-    lama_simpan = (hari_ini - tanggal_input).days
-
-    if perubahan_fisik:
-        # Tambahkan logika yang sama untuk bahan makanan lainnya
-        st.warning("⚠️ Terdapat perubahan fisik pada makanan. Periksa lebih lanjut.")
-    else:
-        st.success("✅ Tidak ada perubahan fisik. Makanan kemungkinan masih layak dimakan.")
-
-                
+            else:
+                st.success("✅ Tidak ada perubahan fisik. Makanan kemungkinan masih layak dimakan.")
+        
 # --- Info ---
 if menu == "ℹ️ Info":
     st.title("ℹ️ Informasi Pembuat Aplikasi")
@@ -359,3 +349,4 @@ if menu == "ℹ️ Info":
 # --- Footer ---
 st.markdown("---")
 st.caption("🥗 *Dirancang untuk mendukung gaya hidup sehat dan aman setiap hari.*")
+
