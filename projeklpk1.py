@@ -154,6 +154,17 @@ if menu == "🧮 Penilaian Kelayakan Makanan":
     kondisi_penyimpanan = st.selectbox("❄️ Kondisi Penyimpanan", [
         "Suhu Ruang 🌡️", "Kulkas (0–4°C) ❄️", "Freezer (-18°C) 🧊"
     ])
+    
+    # Pilih perubahan fisik
+    perubahan_fisik = st.multiselect("⚠️ Perubahan Fisik", [
+        "Perubahan warna 🎨", "Bau tidak sedap 🤢", 
+        "Tekstur berlendir 🦠"
+    ])
+
+    # Menampilkan pilihan bahan makanan dan cek kelayakan
+    
+    if st.button("🔎 Cek Kelayakan"):
+        animation_effect()
     if True:
             if jenis_makanan == "Buah-buahan 🍎":
                 if bahan_makanan == "Pisang":
@@ -323,17 +334,6 @@ if menu == "🧮 Penilaian Kelayakan Makanan":
                         st.info("**Kulkas (0–4°C) ❄️**: 1–2 hari. Ikan segar sebaiknya disimpan di kulkas dalam wadah tertutup rapat.")
                     elif kondisi_penyimpanan == "Freezer (-18°C) 🧊":
                         st.info("**Freezer (-18°C) 🧊**: 3–6 bulan. Simpan ikan dalam kantong kedap udara di freezer untuk menjaga kesegaran.")
-
-    # Pilih perubahan fisik
-    perubahan_fisik = st.multiselect("⚠️ Perubahan Fisik", [
-        "Perubahan warna 🎨", "Bau tidak sedap 🤢", 
-        "Tekstur berlendir 🦠"
-    ])
-
-    # Menampilkan pilihan bahan makanan dan cek kelayakan
-    
-    if st.button("🔎 Cek Kelayakan"):
-        animation_effect()
     
     hari_ini = datetime.now().date()
     lama_simpan = (hari_ini - tanggal_input).days
