@@ -324,18 +324,18 @@ if menu == "🧮 Penilaian Kelayakan Makanan":
                     if metode_penyimpanan == "Suhu Ruang 🌡️":
                         st.info("**Suhu Ruang 🌡️**: 2 jam. Daging ayam harus disimpan di suhu ruang tidak lebih dari 2 jam.")
                     elif metode_penyimpanan == "Kulkas (0–4°C) ❄️":
-                        st.info("**Kulkas (0–4°C) ❄️**: 1–2 hari. Simpan di bagian bawah kulkas dalam wadah kedap udara.")
+                        st.info("**Kulkas ❄️**: 1–2 hari. Simpan di bagian bawah kulkas dalam wadah kedap udara.")
                     elif metode_penyimpanan == "Freezer (-18°C) 🧊":
-                        st.info("**Freezer (-18°C) 🧊**: 9–12 bulan. Daging ayam dapat dibekukan dalam plastik kedap udara.")
+                        st.info("**Freezer 🧊**: 9–12 bulan. Daging ayam dapat dibekukan dalam plastik kedap udara.")
 
                 elif bahan_makanan == "Ikan 🐟":
                     st.warning("🐟 Ikan harus segera disimpan untuk menjaga kesegaran dan mencegah kerusakan.")
                     if metode_penyimpanan == "Suhu Ruang 🌡️":
                         st.info("**Suhu Ruang 🌡️**: 1 jam. Ikan tidak boleh dibiarkan lebih dari 1 jam di suhu ruang, terutama dalam suhu panas.")
                     elif metode_penyimpanan == "Kulkas (0–4°C) ❄️":
-                        st.info("**Kulkas (0–4°C) ❄️**: 1–2 hari. Ikan segar sebaiknya disimpan di kulkas dalam wadah tertutup rapat.")
+                        st.info("**Kulkas ❄️**: 1–2 hari. Ikan segar sebaiknya disimpan di kulkas dalam wadah tertutup rapat.")
                     elif metode_penyimpanan == "Freezer (-18°C) 🧊":
-                        st.info("**Freezer (-18°C) 🧊**: 3–6 bulan. Simpan ikan dalam kantong kedap udara di freezer untuk menjaga kesegaran.")
+                        st.info("**Freezer 🧊**: 3–6 bulan. Simpan ikan dalam kantong kedap udara di freezer untuk menjaga kesegaran.")
 
             # Evaluasi Perubahan Fisik
             if perubahan_fisik:
