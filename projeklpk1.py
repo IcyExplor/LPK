@@ -224,7 +224,6 @@ if st.session_state.menu == "🧮 Penilaian Kelayakan Makanan":
             else:
                 st.success("✅ Tidak ada perubahan fisik terdeteksi. Makanan kemungkinan masih layak dimakan.")
 
-                
 # --- Info ---
 if menu == "ℹ️ Info":
     st.title("ℹ️ Informasi Pembuat Aplikasi")
