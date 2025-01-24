@@ -336,33 +336,39 @@ if menu == "🧮 Penilaian Kelayakan Makanan":
                     elif bahan_makanan == "Semangka":
                         st.warning("🍉 Semangka yang mulai lembek atau berair menandakan kerusakan, lebih baik tidak dimakan.")
                 
-                elif jenis_makanan == "Sayuran 🥦":
-                    if bahan_makanan == "Kubis":
-                        st.warning("🥬 Kubis yang lembek atau layu menunjukkan kehilangan kesegaran. Jika berlendir, sebaiknya dibuang.")
-                    elif bahan_makanan == "Wortel":
-                        st.warning("🥕 Wortel yang keriput masih bisa dimakan, tetapi rasanya kurang segar.")
-                    elif bahan_makanan == "Kembang Kol":
-                        st.warning("🌸 Kembang kol yang menguning atau terlalu lembek menandakan kerusakan.")
-                    elif bahan_makanan == "Selada":
-                        st.warning("🥗 Selada yang layu atau kering masih bisa dimakan, tetapi kualitasnya berkurang.")
-                    elif bahan_makanan == "Jamur":
-                        st.warning("🍄 Jamur yang berlendir atau berair sudah mulai rusak dan sebaiknya tidak dimakan.")
-                
-                elif jenis_makanan == "Daging 🍖":
-                    if bahan_makanan == "Daging Sapi":
-                        st.warning("🥩 Daging sapi yang berwarna kecoklatan atau berlendir bisa menunjukkan mulai rusak. Pastikan tidak berbau busuk.")
-                    elif bahan_makanan == "Daging Ayam":
-                        st.warning("🍗 Daging ayam yang berubah warna menjadi abu-abu atau berlendir bisa menunjukkan pembusukan.")
-                    elif bahan_makanan == "Ikan":
-                        st.warning("🐟 Ikan yang berbau tajam atau kulitnya berlendir menandakan bahwa ikan sudah tidak layak dimakan.")
+                            elif jenis_makanan == "Sayuran 🥦":
+                if bahan_makanan == "Kubis":
+                    st.warning("🥬 Kubis yang layu masih bisa dimasak, tetapi jika berlendir atau berbau, sudah tidak layak.")
+                elif bahan_makanan == "Wortel":
+                    st.warning("🥕 Wortel yang berkerut masih aman dimakan, tetapi jika berlendir, harus dibuang.")
+                elif bahan_makanan == "Selada":
+                    st.warning("🥗 Selada yang layu bisa direndam air dingin untuk segar kembali, tetapi jika berlendir harus dibuang.")
+                elif bahan_makanan == "Bayam":
+                    st.warning("🌿 Bayam yang kuning atau layu harus segera diolah atau dibuang jika berbau.")
 
-            # Menampilkan saran penyimpanan
-            if bahan_makanan in saran_penyimpanan:
-                st.info("📦 **Saran Penyimpanan untuk {}**".format(bahan_makanan))
-                for tipe_penyimpanan, saran in saran_penyimpanan[bahan_makanan].items():
-                    st.write(f"{tipe_penyimpanan}: {saran}")
-                
+            elif jenis_makanan == "Daging 🍖":
+                if bahan_makanan == "Daging Sapi":
+                    st.warning("🥩 Daging sapi yang berubah warna dari merah ke coklat belum tentu rusak, tetapi bau asam atau tekstur berlendir menunjukkan kerusakan.")
+                elif bahan_makanan == "Daging Ayam":
+                    st.warning("🍗 Daging ayam yang berbau atau berlendir tidak layak dikonsumsi.")
+                elif bahan_makanan == "Ikan":
+                    st.warning("🐟 Ikan yang berbau menyengat atau mata yang keruh menunjukkan tidak layak konsumsi.")
 
+        # Saran berdasarkan waktu penyimpanan
+        saran_kategori = (
+            saran_penyimpanan
+            if jenis_makanan == "Buah-buahan 🍎"
+            else saran_penyimpanan_sayuran
+            if jenis_makanan == "Sayuran 🥦"
+            else saran_penyimpanan_daging
+        )
+        saran = saran_kategori.get(bahan_makanan, {}).get(kondisi_penyimpanan, "Tidak ada informasi spesifik.")
+        st.info(f"💡 **Saran Penyimpanan:** {saran}")
+
+        # Kirim notifikasi email
+        if email_pengguna:
+            kirim_notifikasi_email(email_pengguna, bahan_makanan, hari_ini.strftime("%d-%m-%Y"))
+                
 # --- Info ---
 if menu == "ℹ️ Info":
     st.title("ℹ️ Informasi Pembuat Aplikasi")
