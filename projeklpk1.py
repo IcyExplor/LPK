@@ -154,16 +154,7 @@ if menu == "🧮 Penilaian Kelayakan Makanan":
     kondisi_penyimpanan = st.selectbox("❄️ Kondisi Penyimpanan", [
         "Suhu Ruang 🌡️", "Kulkas (0–4°C) ❄️", "Freezer (-18°C) 🧊"
     ])
-    # Pilih perubahan fisik
-    perubahan_fisik = st.multiselect("⚠️ Perubahan Fisik", [
-        "Perubahan warna 🎨", "Bau tidak sedap 🤢", 
-        "Tekstur berlendir 🦠"
-    ])
-
-    # Menampilkan pilihan bahan makanan dan cek kelayakan
-    perubahan_fisik_checkbox = st.checkbox("⚠️ Apakah terdapat perubahan fisik pada makanan?", key="perubahan_fisik")
-
-    if perubahan_fisik_checkbox:
+    if True:
             if jenis_makanan == "Buah-buahan 🍎":
                 if bahan_makanan == "Pisang":
                     st.warning("🍌 Pisang yang muncul titik coklat masih layak dimakan, namun rasanya lebih manis. Jika kulit menghitam, bisa jadi sudah sangat matang.")
@@ -340,6 +331,7 @@ if menu == "🧮 Penilaian Kelayakan Makanan":
     ])
 
     # Menampilkan pilihan bahan makanan dan cek kelayakan
+    
     if st.button("🔎 Cek Kelayakan"):
         animation_effect()
     
