@@ -8,26 +8,38 @@ from email.mime.multipart import MIMEMultipart
 # Konfigurasi halaman
 st.set_page_config(page_title="Food Freshness App", page_icon="🍎", layout="wide")
 
-# Palet Warna
+# Warna untuk mode terang dan gelap
+LIGHT_BACKGROUND = "#E3F2FD"
+DARK_BACKGROUND = "#121212"
+LIGHT_TEXT_COLOR = "#333333"
+DARK_TEXT_COLOR = "#FFFFFF"
 PRIMARY_COLOR = "#4CAF50"
 SECONDARY_COLOR = "#F44336"
-BACKGROUND_COLOR = "#E3F2FD"
-TEXT_COLOR = "#333333"
 ACCENT_COLOR = "#FFC107"
 
-# CSS Kustom
+# CSS Kustom dengan deteksi mode terang/gelap
 st.markdown(f"""
     <style>
-    .main {{
-        background-color: {BACKGROUND_COLOR} !important;
-        color: {TEXT_COLOR};
-        font-family: 'Poppins', sans-serif;
+    :root {{
+        --light-background: {LIGHT_BACKGROUND};
+        --dark-background: {DARK_BACKGROUND};
+        --light-text: {LIGHT_TEXT_COLOR};
+        --dark-text: {DARK_TEXT_COLOR};
+        --primary-color: {PRIMARY_COLOR};
+        --secondary-color: {SECONDARY_COLOR};
+        --accent-color: {ACCENT_COLOR};
     }}
-    .stApp {{
-        background-color: {BACKGROUND_COLOR} !important;
+    body {{
+        background-color: var(--light-background);
+        color: var(--light-text);
+        transition: background-color 0.3s, color 0.3s;
+    }}
+    [data-theme="dark"] body {{
+        background-color: var(--dark-background);
+        color: var(--dark-text);
     }}
     .stButton>button {{
-        background-color: {PRIMARY_COLOR};
+        background-color: var(--primary-color);
         color: white;
         border-radius: 8px;
         padding: 10px 24px;
@@ -36,36 +48,41 @@ st.markdown(f"""
         box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
     }}
     .stButton>button:hover {{
-        background-color: {SECONDARY_COLOR};
+        background-color: var(--secondary-color);
         transform: scale(1.05);
     }}
-    .sidebar .sidebar-content {{
-        background-color: #ffffff;
-        border-radius: 10px;
-        padding: 20px;
-        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-    }}
     h1, h2, h3 {{
-        color: {PRIMARY_COLOR};
-    }}
-    .title {{
-        font-size: 36px;
-        font-weight: bold;
-        color: {PRIMARY_COLOR};
-    }}
-    .subtitle {{
-        font-size: 24px;
-        color: {TEXT_COLOR};
-        margin-bottom: 20px;
+        color: var(--primary-color);
     }}
     </style>
 """, unsafe_allow_html=True)
 
+# JavaScript untuk mendeteksi preferensi mode gelap/terang
+st.markdown("""
+    <script>
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    const rootElement = document.documentElement;
+
+    if (prefersDarkScheme.matches) {
+        rootElement.setAttribute('data-theme', 'dark');
+    } else {
+        rootElement.setAttribute('data-theme', 'light');
+    }
+
+    // Listen for changes
+    prefersDarkScheme.addEventListener('change', (event) => {
+        if (event.matches) {
+            rootElement.setAttribute('data-theme', 'dark');
+        } else {
+            rootElement.setAttribute('data-theme', 'light');
+        }
+    });
+    </script>
+""", unsafe_allow_html=True)
 
 # --- Fungsi Animasi ---
 def animation_effect():
     st.balloons()
-
 
 # --- Fungsi Kirim Email ---
 def kirim_notifikasi_email(email_pengguna, jenis_makanan, hari_tanggal):
@@ -101,7 +118,6 @@ def kirim_notifikasi_email(email_pengguna, jenis_makanan, hari_tanggal):
     except Exception as e:
         st.error(f"Error mengirim email: {e}")
 
-
 # --- Navigasi Sidebar ---
 menu = st.sidebar.selectbox("📂 Menu", [
     "🏠 Beranda",
@@ -121,7 +137,6 @@ if menu == "🏠 Beranda":
 
     - 📅 **Pengecekan Tanggal Kedaluwarsa**: Pantau masa simpan makanan agar tetap aman.  
     """)
-
     st.markdown("---")
     st.info("💡 **Tips:** Jaga kesehatan dengan memilih makanan bergizi dan mengolahnya dengan cara yang tepat!")
 
@@ -156,34 +171,27 @@ elif menu == "🧮 Penilaian Kelayakan Makanan":
         if tanggal_input > hari_ini:
             st.error("❗ Tanggal yang Anda masukkan tidak valid.")
         else:
-            # Tampilkan kelayakan berdasarkan data
             st.success(f"Data kelayakan untuk {bahan_makanan}: {lama_simpan} hari sejak pembelian.")
             if email_pengguna:
                 kirim_notifikasi_email(email_pengguna, bahan_makanan, tanggal_input)
-    
+
 # --- Info ---
 if menu == "ℹ️ Info":
     st.title("ℹ️ Informasi Pembuat Aplikasi")
     st.markdown("""
-    **Aplikasi ini dikembangkan oleh:**
+    **Aplikasi ini dikembangkan oleh:**  
+    - 👩‍💻 **Azzahra Sadrina Nadzifa (2350080)**  
+    - 👩‍💻 **Dhyza Aulia Shabirah (2350084)**  
+    - 👩‍💻 **Diyan Theda Mufarrihah (2350085)**  
+    - 👩‍💻 **Haija Nafiah (2350094)**  
+    - 👨‍💻 **Irsan Abdurrahman (2350100)**  
 
-    - 👩‍💻 **Azzahra Sadrina Nadzifa (2350080)**
-    - 👩‍💻 **Dhyza Aulia Shabirah (2350084)**
-    - 👩‍💻 **Diyan Theda Mufarrihah (2350085)** 
-    - 👩‍💻 **Haija Nafiah (2350094)**
-    - 👨‍💻 **Irsan Abdurrahman (2350100)**
+    Dibuat dengan ❤️ oleh Kelompok 10  
 
-    Dibuat dengan ❤️ oleh Kelompok 10
-
-    D-IV Nanoteknologi Pangan
-    
+    D-IV Nanoteknologi Pangan  
     Politeknik AKA Bogor
     """)
-
 
 # --- Footer ---
 st.markdown("---")
 st.caption("🥗 *Dirancang untuk mendukung gaya hidup sehat dan aman setiap hari.*")
-
-
-
