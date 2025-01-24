@@ -1,6 +1,5 @@
 import streamlit as st
 from PIL import Image
-from datetime import datetime
 
 # Konfigurasi halaman
 st.set_page_config(page_title="Food Freshness App", page_icon="🍎", layout="wide")
@@ -107,14 +106,17 @@ if menu == "🏠 Beranda":
     st.image("https://www.ybkb.or.id/wp-content/uploads/2024/03/shopping-bag-full-fresh-fruits-vegetables-with-assorted-ingredients-min-825x551_yUwnK.jpg", width=700)
 
     # Deskripsi aplikasi dengan ikon dan bullet point yang lebih menarik
-    st.markdown(""" 
+    st.markdown("""
     ### 🌟 Selamat Datang di **Pendeteksi Kelayakan Konsumsi Makanan**!  
     Aplikasi ini dirancang untuk membantu Anda mengonsumsi makanan yang **sehat** dan **aman** dengan fitur menarik berikut:
-    - 📅 **Pengecekan Tanggal Kedaluwarsa**: Pantau masa simpan makanan agar tetap aman.
+
+    - 📅 **Pengecekan Tanggal Kedaluwarsa**: Pantau masa simpan makanan agar tetap aman.  
     """)
+
     # Catatan di bagian bawah
     st.markdown("---")
     st.info("💡 **Tips:** Jaga kesehatan dengan memilih makanan bergizi dan mengolahnya dengan cara yang tepat!")
+
 
 # Menampilkan pilihan bahan makanan berdasarkan kategori yang dipilih
 if menu == "🧮 Penilaian Kelayakan Makanan":
@@ -159,21 +161,16 @@ if menu == "🧮 Penilaian Kelayakan Makanan":
         "Tekstur berlendir 🦠"
     ])
 
-    # Tombol Cek Kelayakan
-    if st.button("🔎 Cek Kelayakan"):
+import streamlit as st
+from datetime import datetime
+
+# Menampilkan pilihan bahan makanan berdasarkan kategori yang dipilih
+if menu == "🧮 Penilaian Kelayakan Makanan":
+    perubahan_fisik = st.button("🔎 Cek Kelayakan"):
         animation_effect()
-        hari_ini = datetime.now().date()
-        lama_simpan = (hari_ini - tanggal_input).days
+    hari_ini = datetime.now().date()
+    lama_simpan = (hari_ini - tanggal_input).days
 
-        if tanggal_input > hari_ini:
-            st.error("❗ Tanggal yang Anda masukkan tidak valid. Silakan masukkan tanggal yang logis.")
-        else:
-            # Menangani kelayakan berdasarkan perubahan fisik dan lama simpan
-            metode_penyimpanan = st.selectbox("📦 Pilih Metode Penyimpanan:", ["Suhu Ruang 🌡️", "Kulkas ❄️", "Freezer 🧊"])
-
-            # Tambahkan logika kelayakan makanan di sini (misalnya untuk buah dan sayuran)
-            st.write(f"Perubahan fisik: {perubahan_fisik}")
-            st.write(f"Lama simpan: {lama_simpan} hari")
     if tanggal_input > hari_ini:
         st.error("❗ Tanggal yang Anda masukkan tidak valid. Silakan masukkan tanggal yang logis.")
     else:
@@ -382,6 +379,3 @@ if menu == "ℹ️ Info":
 # --- Footer ---
 st.markdown("---")
 st.caption("🥗 *Dirancang untuk mendukung gaya hidup sehat dan aman setiap hari.*")
-
-
-
