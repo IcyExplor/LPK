@@ -1,5 +1,6 @@
 import streamlit as st
 from PIL import Image
+from datetime import datetime
 
 # Konfigurasi halaman
 st.set_page_config(page_title="Food Freshness App", page_icon="🍎", layout="wide")
@@ -117,8 +118,7 @@ if menu == "🏠 Beranda":
     st.markdown("---")
     st.info("💡 **Tips:** Jaga kesehatan dengan memilih makanan bergizi dan mengolahnya dengan cara yang tepat!")
 
-
-# Menampilkan pilihan bahan makanan berdasarkan kategori yang dipilih
+# --- Penilaian Kelayakan Makanan ---
 if menu == "🧮 Penilaian Kelayakan Makanan":
     st.title("🔍 Penilaian Kelayakan Makanan")
 
@@ -161,15 +161,12 @@ if menu == "🧮 Penilaian Kelayakan Makanan":
         "Tekstur berlendir 🦠"
     ])
 
-import streamlit as st
-from datetime import datetime
-
-# Menampilkan pilihan bahan makanan berdasarkan kategori yang dipilih
-if menu == "🧮 Penilaian Kelayakan Makanan":
-    perubahan_fisik = st.checkbox("⚠️ Apakah terdapat perubahan fisik pada makanan?", key="perubahan_fisik")
+    # Menampilkan pilihan bahan makanan dan cek kelayakan
+    perubahan_fisik_checkbox = st.checkbox("⚠️ Apakah terdapat perubahan fisik pada makanan?", key="perubahan_fisik")
     
     if st.button("🔎 Cek Kelayakan"):
         animation_effect()
+    
     hari_ini = datetime.now().date()
     lama_simpan = (hari_ini - tanggal_input).days
 
@@ -179,7 +176,7 @@ if menu == "🧮 Penilaian Kelayakan Makanan":
         # Menangani kelayakan berdasarkan perubahan fisik dan lama simpan
         metode_penyimpanan = st.selectbox("📦 Pilih Metode Penyimpanan:", ["Suhu Ruang 🌡️", "Kulkas ❄️", "Freezer 🧊"])
 
-        if perubahan_fisik:
+        if perubahan_fisik_checkbox:
             if jenis_makanan == "Buah-buahan 🍎":
                 if bahan_makanan == "Pisang":
                     st.warning("🍌 Pisang yang muncul titik coklat masih layak dimakan, namun rasanya lebih manis. Jika kulit menghitam, bisa jadi sudah sangat matang.")
