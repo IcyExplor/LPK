@@ -226,7 +226,7 @@ if st.session_state.menu == "🧮 Penilaian Kelayakan Makanan":
 
 # --- Info ---
 if menu == "ℹ️ Info":
-    st.title("ℹ️ Informasi Pembuat Aplikasi")
+    st.title("ℹ️ Informasi Pengembang")
     st.markdown("""
     **Aplikasi ini dikembangkan oleh:**
 
@@ -236,10 +236,9 @@ if menu == "ℹ️ Info":
     - 👩‍💻 **Haija Nafiah (2350094)**
     - 👨‍💻 **Irsan Abdurrahman (2350100)**
 
-    Dibuat dengan ❤️ oleh Kelompok 10
+    Dibuat dengan ❤️ oleh **Kelompok 10**
 
-    D-IV Nanoteknologi Pangan
-    
+    Program Studi D-IV Nanoteknologi Pangan  
     Politeknik AKA Bogor
     """)
 
