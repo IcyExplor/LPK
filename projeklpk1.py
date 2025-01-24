@@ -1,9 +1,6 @@
 import streamlit as st
 from PIL import Image
 from datetime import datetime
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
 
 # Konfigurasi halaman
 st.set_page_config(page_title="Food Freshness App", page_icon="🍎", layout="wide")
@@ -72,7 +69,11 @@ def animation_effect():
         st.markdown('<div class="snowflake">❄️</div>', unsafe_allow_html=True)
 
 # --- Navigasi Sidebar ---
-menu = st.sidebar.selectbox("📂 Menu", ["🏠 Beranda", "🧮 Penilaian Kelayakan Makanan", "ℹ️ Info"])
+menu = st.sidebar.selectbox("📂 Menu", [
+    "🏠 Beranda", 
+    "🧮 Penilaian Kelayakan Makanan", 
+    "ℹ️ Info"
+])
 
 # --- Beranda ---
 if menu == "🏠 Beranda":
@@ -93,20 +94,35 @@ if menu == "🏠 Beranda":
     st.markdown("---")
     st.info("💡 **Tips:** Jaga kesehatan dengan memilih makanan bergizi dan mengolahnya dengan cara yang tepat!")
 
-# --- Penilaian Kelayakan Makanan ---
+
+# Menampilkan pilihan bahan makanan berdasarkan kategori yang dipilih
 if menu == "🧮 Penilaian Kelayakan Makanan":
     st.title("🔍 Penilaian Kelayakan Makanan")
 
     # Pilih jenis makanan utama
-    jenis_makanan = st.selectbox("🍽️ Pilih Jenis Makanan", ["Sayuran 🥦", "Buah-buahan 🍎", "Daging 🍖"])
+    jenis_makanan = st.selectbox("🍽️ Pilih Jenis Makanan", [
+        "Sayuran 🥦", 
+        "Buah-buahan 🍎", 
+        "Daging 🍖"
+    ])
 
     # Menampilkan pilihan bahan makanan berdasarkan kategori yang dipilih
     if jenis_makanan == "Buah-buahan 🍎":
-        bahan_makanan = st.selectbox("🍏 Pilih Buah", ["Anggur", "Mangga", "Kiwi", "Nanas", "Alpukat", "Pisang", "Jeruk", "Melon", "Semangka", "Strawberry", "Buah Potong", "Pepaya"])
+        bahan_makanan = st.selectbox("🍏 Pilih Buah", [
+            "Anggur", "Mangga", "Kiwi", "Nanas", 
+            "Alpukat", "Pisang", "Jeruk", "Melon", 
+            "Semangka", "Strawberry", "Buah Potong", "Pepaya"
+        ])
     elif jenis_makanan == "Sayuran 🥦":
-        bahan_makanan = st.selectbox("🥦 Pilih Sayuran", ["Kubis", "Wortel", "Kembang Kol", "Selada", "Jamur", "Bayam", "Kentang", "Mentimun", "Terong", "Jagung"])
+        bahan_makanan = st.selectbox("🥦 Pilih Sayuran", [
+            "Kubis", "Wortel", "Kembang Kol", "Selada", 
+            "Jamur", "Bayam", "Kentang", "Mentimun", 
+            "Terong", "Jagung"
+        ])
     elif jenis_makanan == "Daging 🍖":
-        bahan_makanan = st.selectbox("🍖 Pilih Daging", ["Daging Sapi", "Daging Ayam", "Ikan"])
+        bahan_makanan = st.selectbox("🍖 Pilih Daging", [
+            "Daging Sapi", "Daging Ayam", "Ikan"
+        ])
 
     # Menampilkan pilihan yang dipilih
     st.write(f"Anda memilih: {bahan_makanan}")
@@ -115,53 +131,66 @@ if menu == "🧮 Penilaian Kelayakan Makanan":
     tanggal_input = st.date_input("📅 Tanggal Pembelian")
 
     # Pilih kondisi penyimpanan
-    kondisi_penyimpanan = st.selectbox("❄️ Kondisi Penyimpanan", ["Suhu Ruang 🌡️", "Kulkas (0–4°C) ❄️", "Freezer (-18°C) 🧊"])
+    kondisi_penyimpanan = st.selectbox("❄️ Kondisi Penyimpanan", [
+        "Suhu Ruang 🌡️", "Kulkas (0–4°C) ❄️", "Freezer (-18°C) 🧊"
+    ])
 
     # Pilih perubahan fisik
-    perubahan_fisik = st.multiselect("⚠️ Perubahan Fisik", ["Perubahan warna 🎨", "Bau tidak sedap 🤢", "Tekstur berlendir 🦠"])
+    perubahan_fisik = st.multiselect("⚠️ Perubahan Fisik", [
+        "Perubahan warna 🎨", "Bau tidak sedap 🤢", 
+        "Tekstur berlendir 🦠"
+    ])
 
-    # Cek kelayakan
-    if st.button("🔎 Cek Kelayakan"):
-        animation_effect()
-        hari_ini = datetime.now().date()
-        lama_simpan = (hari_ini - tanggal_input).days
+# Kategori makanan dan saran penyimpanan berdasarkan kondisi
+saran_penyimpanan = {
+    "Anggur 🍇": {
+        "Suhu Ruang 🌡️": "5–7 hari. Pisah anggur yang masih baik dengan anggur yang sudah membusuk. Jauhkan dari bahan makanan lain dengan aroma menyengat.",
+        "Kulkas (0–4°C) ❄️": "2 minggu. Simpan dalam plastik kedap udara atau wadah tertutup, pisahkan anggur yang busuk.",
+        "Freezer (-18°C) 🧊": "1 bulan. Jangan dicairkan karena buah akan menjadi lembek."
+    },
+    "Mangga 🥭": {
+        "Suhu Ruang 🌡️": "3–5 hari. Jangan simpan terlalu lama karena dapat mengurangi kesegaran.",
+        "Kulkas (0–4°C) ❄️": "2-3 hari. Jangan simpan di kulkas terlalu lama untuk menjaga rasa dan kesegaran.",
+        "Freezer (-18°C) 🧊": "> 1 minggu. Jika sudah dipotong, simpan di freezer dalam wadah kedap udara."
+    },
+    "Kiwi 🥝": {
+        "Suhu Ruang 🌡️": "3–5 hari. Simpan di suhu ruang agar tetap matang dan lezat.",
+        "Kulkas (0–4°C) ❄️": "1–2 minggu. Jika sudah matang, simpan di kulkas.",
+        "Freezer (-18°C) 🧊": "Tidak disarankan untuk dibekukan."
+    },
+    "Nanas 🍍": {
+        "Suhu Ruang 🌡️": "3–5 hari. Nanas utuh sebaiknya disimpan di suhu ruang.",
+        "Kulkas (0–4°C) ❄️": "1 minggu. Setelah dipotong, simpan di kulkas.",
+        "Freezer (-18°C) 🧊": "Tidak disarankan untuk dibekukan."
+    },
+    "Alpukat 🥑": {
+        "Suhu Ruang 🌡️": "3–5 hari. Setelah matang, konsumsilah segera. Jika belum matang, simpan di suhu ruang.",
+        "Kulkas (0–4°C) ❄️": "Tidak disarankan, alpukat akan cepat rusak bahkan di kulkas.",
+        "Freezer (-18°C) 🧊": "Tidak disarankan untuk dibekukan."
+    },
+    "Pisang 🍌": {
+        "Suhu Ruang 🌡️": "3–5 hari. Pisang tidak perlu disimpan di kulkas.",
+        "Kulkas (0–4°C) ❄️": "Tidak disarankan. Pisang akan berubah menjadi coklat dan tidak matang.",
+        "Freezer (-18°C) 🧊": "Dapat dibekukan untuk konsumsi smoothie, tetapi teksturnya akan berubah."
+    },
+    "Jeruk 🍊": {
+        "Suhu Ruang 🌡️": "1 minggu. Simpan jeruk di suhu ruang jika akan dimakan dalam waktu dekat.",
+        "Kulkas (0–4°C) ❄️": "2–3 minggu. Jeruk akan tetap segar lebih lama di kulkas.",
+        "Freezer (-18°C) 🧊": "Tidak disarankan, bisa mengubah tekstur buah."
+    },
+    "Melon 🍉": {
+        "Suhu Ruang 🌡️": "3–5 hari. Simpan melon di suhu ruang.",
+        "Kulkas (0–4°C) ❄️": "1 minggu. Setelah dipotong, simpan di kulkas.",
+        "Freezer (-18°C) 🧊": "Tidak disarankan untuk dibekukan."
+    },
+}
 
-        if tanggal_input > hari_ini:
-            st.error("❗ Tanggal yang Anda masukkan tidak valid. Silakan masukkan tanggal yang logis.")
-        else:
-            # Menangani kelayakan berdasarkan perubahan fisik dan lama simpan
-            if perubahan_fisik:
-                if jenis_makanan == "Buah-buahan 🍎":
-                    if bahan_makanan == "Pisang":
-                        st.warning("🍌 Pisang yang muncul titik coklat masih layak dimakan, namun rasanya lebih manis. Jika kulit menghitam, bisa jadi sudah sangat matang.")
-                    elif bahan_makanan == "Mangga":
-                        st.warning("🥭 Mangga yang berubah warna dari hijau ke kuning/oranye adalah tanda kematangan dan tetap layak dikonsumsi.")
-                    elif bahan_makanan == "Pepaya":
-                        st.warning("🍈 Pepaya yang mengubah warna dari hijau ke oranye menandakan kematangan, namun jika sangat lembek bisa mulai rusak.")
-                    elif bahan_makanan == "Jeruk":
-                        st.warning("🍊 Jeruk dengan kulit keriput masih bisa dimakan, tapi teksturnya sudah berkurang.")
-                    elif bahan_makanan == "Semangka":
-                        st.warning("🍉 Semangka yang mulai lembek atau berair menandakan kerusakan, lebih baik tidak dimakan.")
-                
-                elif jenis_makanan == "Sayuran 🥦":
-                    if bahan_makanan == "Kubis":
-                        st.warning("🥬 Kubis yang lembek atau layu menunjukkan kehilangan kesegaran. Jika berlendir, sebaiknya dibuang.")
-                    elif bahan_makanan == "Wortel":
-                        st.warning("🥕 Wortel yang keriput masih bisa dimakan, tetapi rasanya kurang segar.")
-                    elif bahan_makanan == "Kembang Kol":
-                        st.warning("🌸 Kembang kol yang menguning atau terlalu lembek menandakan kerusakan.")
-                    elif bahan_makanan == "Selada":
-                        st.warning("🥗 Selada yang layu atau kering masih bisa dimakan, tetapi kualitasnya berkurang.")
-                    elif bahan_makanan == "Jamur":
-                        st.warning("🍄 Jamur yang berlendir atau berair sudah mulai rusak dan sebaiknya tidak dimakan.")
-                
-                elif jenis_makanan == "Daging 🍖":
-                    if bahan_makanan == "Daging Sapi":
-                        st.warning("🥩 Daging sapi yang berwarna kecoklatan atau berlendir bisa menunjukkan mulai rusak. Pastikan tidak berbau busuk.")
-                    elif bahan_makanan == "Daging Ayam":
-                        st.warning("🍗 Daging ayam yang berubah warna menjadi abu-abu atau berlendir bisa menunjukkan pembusukan.")
-                    elif bahan_makanan == "Ikan":
-                        st.warning("🐟 Ikan yang berbau tajam atau kulitnya berlendir menandakan bahwa ikan sudah tidak layak dimakan.")
+# Tampilkan saran penyimpanan berdasarkan pilihan
+if bahan_makanan in saran_penyimpanan:
+    st.info(f"📦 **Saran Penyimpanan untuk {bahan_makanan}:**")
+    for penyimpanan, saran in saran_penyimpanan[bahan_makanan].items():
+        st.markdown(f"- {penyimpanan}: {saran}")
+
 
             # --- Info ---
 if menu == "ℹ️ Info":
