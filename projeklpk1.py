@@ -165,6 +165,12 @@ if menu == "🧮 Penilaian Kelayakan Makanan":
     
     if st.button("🔎 Cek Kelayakan"):
         animation_effect()
+    
+    hari_ini = datetime.now().date()
+    lama_simpan = (hari_ini - tanggal_input).days
+
+    if tanggal_input > hari_ini:
+        st.error("❗ Tanggal yang Anda masukkan tidak valid. Silakan masukkan tanggal yang logis.")
     if True:
             if jenis_makanan == "Buah-buahan 🍎":
                 if bahan_makanan == "Pisang":
@@ -334,12 +340,6 @@ if menu == "🧮 Penilaian Kelayakan Makanan":
                         st.info("**Kulkas (0–4°C) ❄️**: 1–2 hari. Ikan segar sebaiknya disimpan di kulkas dalam wadah tertutup rapat.")
                     elif kondisi_penyimpanan == "Freezer (-18°C) 🧊":
                         st.info("**Freezer (-18°C) 🧊**: 3–6 bulan. Simpan ikan dalam kantong kedap udara di freezer untuk menjaga kesegaran.")
-    
-    hari_ini = datetime.now().date()
-    lama_simpan = (hari_ini - tanggal_input).days
-
-    if tanggal_input > hari_ini:
-        st.error("❗ Tanggal yang Anda masukkan tidak valid. Silakan masukkan tanggal yang logis.")
     else:
         st.success("✅ Tidak ada perubahan fisik. Makanan kemungkinan masih layak dimakan.")
 
