@@ -118,6 +118,8 @@ if menu == "🏠 Beranda":
     st.markdown("---")
     st.info("💡 **Tips:** Jaga kesehatan dengan memilih makanan bergizi dan mengolahnya dengan cara yang tepat!")
 
+                
+
 # --- Penilaian Kelayakan Makanan ---
 if "menu" not in st.session_state:
     st.session_state.menu = "🧮 Penilaian Kelayakan Makanan"
@@ -223,6 +225,7 @@ if st.session_state.menu == "🧮 Penilaian Kelayakan Makanan":
                 st.error(f"Perubahan fisik terdeteksi: {', '.join(perubahan_fisik)}. Makanan kemungkinan tidak layak konsumsi.")
             else:
                 st.success("✅ Tidak ada perubahan fisik terdeteksi. Makanan kemungkinan masih layak dimakan.")
+
 
 # --- Info ---
 if menu == "ℹ️ Info":
