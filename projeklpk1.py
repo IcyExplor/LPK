@@ -151,7 +151,7 @@ if menu == "🧮 Penilaian Kelayakan Makanan":
             st.error("❗ Tanggal yang Anda masukkan tidak valid. Silakan masukkan tanggal yang logis.")
         else:
             # Menangani kelayakan berdasarkan perubahan fisik dan lama simpan
-        metode_penyimpanan = st.selectbox("📦 Pilih Metode Penyimpanan:", ["Suhu Ruang 🌡️", "Kulkas ❄️", "Freezer 🧊"])
+            metode_penyimpanan = st.selectbox("📦 Pilih Metode Penyimpanan:", ["Suhu Ruang 🌡️", "Kulkas ❄️", "Freezer 🧊"])
 
         if perubahan_fisik:
             if jenis_makanan == "Buah-buahan 🍎":
@@ -349,4 +349,3 @@ if menu == "ℹ️ Info":
 # --- Footer ---
 st.markdown("---")
 st.caption("🥗 *Dirancang untuk mendukung gaya hidup sehat dan aman setiap hari.*")
-
