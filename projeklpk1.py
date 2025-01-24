@@ -129,8 +129,7 @@ if menu == "🧮 Penilaian Kelayakan Makanan":
     tanggal_input = st.date_input("📅 Tanggal Pembelian")
 
     # Pilih kondisi penyimpanan
-    kondisi_penyimpanan = st.selectbox("❄️ Kondisi Penyimpanan", [
-        "Suhu Ruang 🌡️", "Kulkas (0–4°C) ❄️", "Freezer (-18°C) 🧊"
+    metode_penyimpanan = st.selectbox("📦 Pilih Metode Penyimpanan:", ["Suhu Ruang 🌡️", "Kulkas ❄️", "Freezer 🧊"])
     ])
 
     # Pilih perubahan fisik
@@ -155,9 +154,6 @@ if menu == "🧮 Penilaian Kelayakan Makanan":
     if tanggal_input > hari_ini:
         st.error("❗ Tanggal yang Anda masukkan tidak valid. Silakan masukkan tanggal yang logis.")
     else:
-        # Menangani kelayakan berdasarkan perubahan fisik dan lama simpan
-        metode_penyimpanan = st.selectbox("📦 Pilih Metode Penyimpanan:", ["Suhu Ruang 🌡️", "Kulkas ❄️", "Freezer 🧊"])
-
         if perubahan_fisik:
             if jenis_makanan == "Buah-buahan 🍎":
                 if bahan_makanan == "Pisang":
