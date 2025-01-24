@@ -127,31 +127,6 @@ if menu == "🧮 Penilaian Kelayakan Makanan":
 
     # Input tanggal pembelian
     tanggal_input = st.date_input("📅 Tanggal Pembelian")
-
-    # Pilih kondisi penyimpanan
-    kondisi_penyimpanan = st.selectbox("❄️ Kondisi Penyimpanan", [
-        "Suhu Ruang 🌡️", "Kulkas (0–4°C) ❄️", "Freezer (-18°C) 🧊"
-    ])
-
-    # Pilih perubahan fisik
-    perubahan_fisik = st.multiselect("⚠️ Perubahan Fisik", [
-        "Perubahan warna 🎨", "Bau tidak sedap 🤢", 
-        "Tekstur berlendir 🦠"
-    ])
-
-
-import streamlit as st
-from datetime import datetime
-
-# Menampilkan pilihan bahan makanan berdasarkan kategori yang dipilih
-if menu == "🧮 Penilaian Kelayakan Makanan":
-    perubahan_fisik = st.checkbox("⚠️ Apakah terdapat perubahan fisik pada makanan?", key="perubahan_fisik")
-    
-    if st.button("🔎 Cek Kelayakan"):
-        animation_effect()
-    hari_ini = datetime.now().date()
-    lama_simpan = (hari_ini - tanggal_input).days
-
     if tanggal_input > hari_ini:
         st.error("❗ Tanggal yang Anda masukkan tidak valid. Silakan masukkan tanggal yang logis.")
     else:
@@ -328,9 +303,26 @@ if menu == "🧮 Penilaian Kelayakan Makanan":
                     elif metode_penyimpanan == "Freezer (-18°C) 🧊":
                         st.info("**Freezer (-18°C) 🧊**: 3–6 bulan. Simpan ikan dalam kantong kedap udara di freezer untuk menjaga kesegaran.")
 
+    # Pilih perubahan fisik
+    perubahan_fisik = st.multiselect("⚠️ Perubahan Fisik", [
+        "Perubahan warna 🎨", "Bau tidak sedap 🤢", 
+        "Tekstur berlendir 🦠"
+    ])
 
-                # Tambahkan logika yang sama untuk bahan makanan lainnya
 
+import streamlit as st
+from datetime import datetime
+
+# Menampilkan pilihan bahan makanan berdasarkan kategori yang dipilih
+if menu == "🧮 Penilaian Kelayakan Makanan":
+    perubahan_fisik = st.checkbox("⚠️ Apakah terdapat perubahan fisik pada makanan?", key="perubahan_fisik")
+    
+    if st.button("🔎 Cek Kelayakan"):
+        animation_effect()
+    hari_ini = datetime.now().date()
+    lama_simpan = (hari_ini - tanggal_input).days
+               
+    # Tambahkan logika yang sama untuk bahan makanan lainnya
         else:
             st.success("✅ Tidak ada perubahan fisik. Makanan kemungkinan masih layak dimakan.")
 
