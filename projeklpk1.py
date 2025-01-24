@@ -127,11 +127,18 @@ if menu == "🧮 Penilaian Kelayakan Makanan":
 
     # Input tanggal pembelian
     tanggal_input = st.date_input("📅 Tanggal Pembelian")
+    hari_ini = datetime.now().date()
     if tanggal_input > hari_ini:
         st.error("❗ Tanggal yang Anda masukkan tidak valid. Silakan masukkan tanggal yang logis.")
     else:
         # Menangani kelayakan berdasarkan perubahan fisik dan lama simpan
         metode_penyimpanan = st.selectbox("📦 Pilih Metode Penyimpanan:", ["Suhu Ruang 🌡️", "Kulkas ❄️", "Freezer 🧊"])
+
+        # Pilih perubahan fisik
+        perubahan_fisik = st.multiselect("⚠️ Perubahan Fisik", [
+            "Perubahan warna 🎨", "Bau tidak sedap 🤢", 
+            "Tekstur berlendir 🦠"
+        ])
 
         if perubahan_fisik:
             if jenis_makanan == "Buah-buahan 🍎":
@@ -321,10 +328,12 @@ if menu == "🧮 Penilaian Kelayakan Makanan":
         animation_effect()
     hari_ini = datetime.now().date()
     lama_simpan = (hari_ini - tanggal_input).days
-               
-    # Tambahkan logika yang sama untuk bahan makanan lainnya
-        else:
-            st.success("✅ Tidak ada perubahan fisik. Makanan kemungkinan masih layak dimakan.")
+
+    if perubahan_fisik:
+        # Tambahkan logika yang sama untuk bahan makanan lainnya
+        st.warning("⚠️ Terdapat perubahan fisik pada makanan. Periksa lebih lanjut.")
+    else:
+        st.success("✅ Tidak ada perubahan fisik. Makanan kemungkinan masih layak dimakan.")
 
                 
 # --- Info ---
