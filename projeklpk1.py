@@ -166,7 +166,9 @@ from datetime import datetime
 
 # Menampilkan pilihan bahan makanan berdasarkan kategori yang dipilih
 if menu == "🧮 Penilaian Kelayakan Makanan":
-    perubahan_fisik = st.button("🔎 Cek Kelayakan"):
+    perubahan_fisik = st.checkbox("⚠️ Apakah terdapat perubahan fisik pada makanan?", key="perubahan_fisik")
+    
+    if st.button("🔎 Cek Kelayakan"):
         animation_effect()
     hari_ini = datetime.now().date()
     lama_simpan = (hari_ini - tanggal_input).days
@@ -187,8 +189,6 @@ if menu == "🧮 Penilaian Kelayakan Makanan":
                         st.info("**Kulkas ❄️**: Hingga 7 hari, namun pastikan tidak terlalu dingin agar tidak mempercepat kerusakan.")
                     elif metode_penyimpanan == "Freezer 🧊":
                         st.info("**Freezer 🧊**: Tidak direkomendasikan untuk pisang mentah.")
-                
-                # Continue similar logic for other food types
 
                 elif bahan_makanan == "Mangga":
                     st.warning("🥭 Mangga yang berubah warna dari hijau ke kuning/oranye adalah tanda kematangan dan tetap layak dikonsumsi.")
@@ -379,3 +379,4 @@ if menu == "ℹ️ Info":
 # --- Footer ---
 st.markdown("---")
 st.caption("🥗 *Dirancang untuk mendukung gaya hidup sehat dan aman setiap hari.*")
+
