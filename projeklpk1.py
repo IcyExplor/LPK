@@ -121,10 +121,7 @@ if menu == "🏠 Beranda":
                 
 
 # --- Penilaian Kelayakan Makanan ---
-if "menu" not in st.session_state:
-    st.session_state.menu = "🧮 Penilaian Kelayakan Makanan"
-
-if st.session_state.menu == "🧮 Penilaian Kelayakan Makanan":
+if menu == "🧮 Penilaian Kelayakan Makanan":
     st.title("🔍 Penilaian Kelayakan Makanan")
 
     # Pilih Jenis Makanan Utama
