@@ -1,67 +1,89 @@
 import streamlit as st
 from PIL import Image
 
-
 # Konfigurasi halaman
 st.set_page_config(page_title="Food Freshness App", page_icon="🍎", layout="wide")
 
 # Palet Warna
 PRIMARY_COLOR = "#4CAF50"
 SECONDARY_COLOR = "#F44336"
-BACKGROUND_COLOR = "#E3F2FD"  # Biru muda
-TEXT_COLOR = "#333333"
+BACKGROUND_COLOR_LIGHT = "#E3F2FD"  # Biru muda untuk mode terang
+BACKGROUND_COLOR_DARK = "#121212"  # Gelap untuk mode gelap
+TEXT_COLOR_LIGHT = "#333333"
+TEXT_COLOR_DARK = "#FFFFFF"
 ACCENT_COLOR = "#FFC107"
 
 # CSS Kustom
 st.markdown(f"""
     <style>
-    .main {{
-        background-color: {BACKGROUND_COLOR} !important;
-        color: {TEXT_COLOR};
-        font-family: 'Poppins', sans-serif;
+    /* Menyesuaikan tema berdasarkan preferensi pengguna */
+    @media (prefers-color-scheme: light) {{
+        .main {{
+            background-color: {BACKGROUND_COLOR_LIGHT} !important;
+            color: {TEXT_COLOR_LIGHT};
+            font-family: 'Poppins', sans-serif;
+        }}
+        .stApp {{
+            background-color: {BACKGROUND_COLOR_LIGHT} !important;
+        }}
+        .stButton>button {{
+            background-color: {PRIMARY_COLOR};
+            color: white;
+            border-radius: 8px;
+            padding: 10px 24px;
+            font-size: 16px;
+            transition: 0.3s;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }}
+        .stButton>button:hover {{
+            background-color: {SECONDARY_COLOR};
+            transform: scale(1.05);
+        }}
+        .sidebar .sidebar-content {{
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        }}
+        h1, h2, h3 {{
+            color: {PRIMARY_COLOR};
+        }}
     }}
-    .stApp {{
-        background-color: {BACKGROUND_COLOR} !important;
-    }}
-    .stButton>button {{
-        background-color: {PRIMARY_COLOR};
-        color: white;
-        border-radius: 8px;
-        padding: 10px 24px;
-        font-size: 16px;
-        transition: 0.3s;
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-    }}
-    .stButton>button:hover {{
-        background-color: {SECONDARY_COLOR};
-        transform: scale(1.05);
-    }}
-    .sidebar .sidebar-content {{
-        background-color: #ffffff;
-        border-radius: 10px;
-        padding: 20px;
-        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-    }}
-    h1, h2, h3 {{
-        color: {PRIMARY_COLOR};
-    }}
-    .title {{
-        font-size: 36px;
-        font-weight: bold;
-        color: {PRIMARY_COLOR};
-    }}
-    .subtitle {{
-        font-size: 24px;
-        color: {TEXT_COLOR};
-        margin-bottom: 20px;
-    }}
-    .image-container {{
-        text-align: center;
-        margin: 20px 0;
+
+    @media (prefers-color-scheme: dark) {{
+        .main {{
+            background-color: {BACKGROUND_COLOR_DARK} !important;
+            color: {TEXT_COLOR_DARK};
+            font-family: 'Poppins', sans-serif;
+        }}
+        .stApp {{
+            background-color: {BACKGROUND_COLOR_DARK} !important;
+        }}
+        .stButton>button {{
+            background-color: {PRIMARY_COLOR};
+            color: white;
+            border-radius: 8px;
+            padding: 10px 24px;
+            font-size: 16px;
+            transition: 0.3s;
+            box-shadow: 2px 2px 5px rgba(255, 255, 255, 0.2);
+        }}
+        .stButton>button:hover {{
+            background-color: {SECONDARY_COLOR};
+            transform: scale(1.05);
+        }}
+        .sidebar .sidebar-content {{
+            background-color: #333333;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+        }}
+        h1, h2, h3 {{
+            color: {ACCENT_COLOR};
+        }}
     }}
     </style>
 """, unsafe_allow_html=True)
-
 
 # --- Efek Animasi Balon dan Salju ---
 def animation_effect():
@@ -139,7 +161,6 @@ if menu == "🧮 Penilaian Kelayakan Makanan":
         "Tekstur berlendir 🦠"
     ])
 
-
 import streamlit as st
 from datetime import datetime
 
@@ -168,6 +189,8 @@ if menu == "🧮 Penilaian Kelayakan Makanan":
                         st.info("**Kulkas ❄️**: Hingga 7 hari, namun pastikan tidak terlalu dingin agar tidak mempercepat kerusakan.")
                     elif metode_penyimpanan == "Freezer 🧊":
                         st.info("**Freezer 🧊**: Tidak direkomendasikan untuk pisang mentah.")
+                
+                # Continue similar logic for other food types
 
                 elif bahan_makanan == "Mangga":
                     st.warning("🥭 Mangga yang berubah warna dari hijau ke kuning/oranye adalah tanda kematangan dan tetap layak dikonsumsi.")
